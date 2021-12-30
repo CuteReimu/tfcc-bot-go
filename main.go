@@ -19,6 +19,10 @@ func init() {
 		_, _ = os.Stdin.Read(b)
 		os.Exit(0)
 	}
+	_, err = os.Stat("device.json")
+	if err != nil {
+		bot.GenRandomDevice()
+	}
 	utils.WriteLogToFS()
 	config.Init()
 }
