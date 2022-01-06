@@ -49,10 +49,12 @@ func (m *mh) PostInit() {
 
 func (m *mh) Serve(b *bot.Bot) {
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+		var isAt bool
 		elem := msg.Elements
 		if len(elem) > 0 {
 			if at, ok := elem[0].(*message.AtElement); ok && at.Target == b.Uin {
 				elem = elem[1:]
+				isAt = true
 			}
 		}
 		var cmd, content string
@@ -71,7 +73,9 @@ func (m *mh) Serve(b *bot.Bot) {
 			}
 		}
 		if len(cmd) == 0 {
-			tips(c, msg)
+			if isAt {
+				tips(c, msg)
+			}
 			return
 		}
 		if handler, ok := handlers[cmd]; ok {
