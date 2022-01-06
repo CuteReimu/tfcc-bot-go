@@ -6,7 +6,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
-	"io/ioutil"
+	"github.com/spf13/viper"
 	"os"
 	"os/signal"
 )
@@ -55,8 +55,17 @@ func main() {
 }
 
 func writeConfig() {
-	s := "bot:\n  # QQ号\n  account: 0\n  # 密码，不填就是扫码登录\n  password: \"\"\n"
-	err := ioutil.WriteFile("application.yaml", []byte(s), 0644)
+	config.GlobalConfig = &config.Config{Viper: viper.New()}
+	config.GlobalConfig.Set("bot.account", int64(0))
+	config.GlobalConfig.Set("bot.password", "")
+	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
+	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
+	config.GlobalConfig.Set("schedule.before", []int64{3 * 3600, 6 * 3600})
+	config.GlobalConfig.Set("schedule.video_push_delay", int64(600))
+	config.GlobalConfig.Set("repeater_interruption.qq_group", []int64{12345678})
+	config.GlobalConfig.Set("repeater_interruption.allowance", 5)
+	config.GlobalConfig.Set("repeater_interruption.cool_down", int64(3))
+	err := config.GlobalConfig.WriteConfigAs("application.yaml")
 	if err != nil {
 		fmt.Println("生成application.yaml失败，请检查")
 	} else {
