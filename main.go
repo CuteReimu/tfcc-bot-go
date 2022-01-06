@@ -6,6 +6,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/spf13/viper"
 	"os"
 	"os/signal"
@@ -25,6 +26,7 @@ func init() {
 	}
 	utils.WriteLogToFS()
 	config.Init()
+	db.Init()
 }
 
 func main() {
@@ -52,6 +54,7 @@ func main() {
 	signal.Notify(ch, os.Interrupt, os.Kill)
 	<-ch
 	bot.Stop()
+	db.Stop()
 }
 
 func writeConfig() {
