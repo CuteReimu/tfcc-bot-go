@@ -5,6 +5,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/spf13/viper"
@@ -26,14 +27,13 @@ func init() {
 	}
 	utils.WriteLogToFS()
 	config.Init()
-	db.Init()
 }
 
 func main() {
-	// 快速初始化
+	// 初始化
+	db.Init()
+	bilibili.Init()
 	bot.Init()
-
-	// 初始化 Modules
 	bot.StartService()
 
 	// 使用协议
@@ -51,7 +51,7 @@ func main() {
 	bot.RefreshList()
 
 	ch := make(chan os.Signal, 1)
-	signal.Notify(ch, os.Interrupt, os.Kill)
+	signal.Notify(ch, os.Interrupt)
 	<-ch
 	bot.Stop()
 	db.Stop()
@@ -68,6 +68,11 @@ func writeConfig() {
 	config.GlobalConfig.Set("repeater_interruption.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("repeater_interruption.allowance", 5)
 	config.GlobalConfig.Set("repeater_interruption.cool_down", int64(3))
+	config.GlobalConfig.Set("bilibili.username", "13888888888")
+	config.GlobalConfig.Set("bilibili.password", "12345678")
+	config.GlobalConfig.Set("bilibili.mid", "12345678")
+	config.GlobalConfig.Set("bilibili.room_id", "12345678")
+	config.GlobalConfig.Set("bilibili.area_v2", "236")
 	err := config.GlobalConfig.WriteConfigAs("application.yaml")
 	if err != nil {
 		fmt.Println("生成application.yaml失败，请检查")

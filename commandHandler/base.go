@@ -50,7 +50,7 @@ func (m *mh) PostInit() {
 func (m *mh) Serve(b *bot.Bot) {
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
 		elem := msg.Elements
-		if len(elem) > 1 {
+		if len(elem) > 0 {
 			if at, ok := elem[0].(*message.AtElement); ok && at.Target == b.Uin {
 				elem = elem[1:]
 			}
@@ -62,7 +62,7 @@ func (m *mh) Serve(b *bot.Bot) {
 		if len(elem) == 1 {
 			if text, ok := elem[0].(*message.TextElement); ok {
 				arr := strings.SplitN(strings.TrimSpace(text.Content), " ", 2)
-				cmd = arr[0]
+				cmd = strings.TrimSpace(arr[0])
 				if len(arr) > 1 {
 					content = strings.TrimSpace(arr[1])
 				}
@@ -71,7 +71,7 @@ func (m *mh) Serve(b *bot.Bot) {
 			}
 		}
 		if len(cmd) == 0 {
-			tips()
+			tips(c, msg)
 			return
 		}
 		if handler, ok := handlers[cmd]; ok {
@@ -103,6 +103,13 @@ func (m *mh) Stop(_ *bot.Bot, wg *sync.WaitGroup) {
 	defer wg.Done()
 }
 
-func tips() {
-	// TODO 查看帮助
+func tips(c *client.QQClient, msg *message.GroupMessage) {
+	var ret []string
+	for _, handler := range handlers {
+		if handler.CheckAuth(msg.GroupCode, msg.Sender.Uin) {
+			tip := handler.ShowTips(msg.GroupCode, msg.Sender.Uin)
+			ret = append(ret, tip)
+		}
+	}
+	c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText("你可以使用以下功能：\n"+strings.Join(ret, "\n"))))
 }

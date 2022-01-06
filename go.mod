@@ -6,7 +6,10 @@ require (
 	github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e
 	github.com/Mrs4s/MiraiGo v0.0.0-20211228140953-ab72f3dc28da
 	github.com/dgraph-io/badger/v3 v3.2103.2
+	github.com/go-resty/resty/v2 v2.7.0
+	github.com/ozgio/strutil v0.4.0
 	github.com/spf13/viper v1.10.1
+	github.com/tidwall/gjson v1.12.1
 )
 
 require (
@@ -44,7 +47,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
-	github.com/tidwall/gjson v1.12.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tuotoo/qrcode v0.0.0-20190222102259-ac9c44189bf2 // indirect
