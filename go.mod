@@ -6,8 +6,10 @@ require (
 	github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e
 	github.com/Mrs4s/MiraiGo v0.0.0-20220106125209-41a6cb05a7da
 	github.com/dgraph-io/badger/v3 v3.2103.2
+	github.com/dlclark/regexp2 v1.4.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ozgio/strutil v0.4.0
+	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.10.1
 	github.com/tidwall/gjson v1.12.1
 )
@@ -38,7 +40,6 @@ require (
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pierrec/lz4/v4 v4.1.12 // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect

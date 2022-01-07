@@ -17,7 +17,7 @@ func init() {
 var instance = &mh{}
 var logger = utils.GetModuleLogger("tfcc-bot-go.cmdHandler")
 
-// 这是聊天指令处理器的接口，当你想要新增自己的聊天指令处理器时，继承这个类即可。最后，不要忘记在init里调用register
+// 这是聊天指令处理器的接口，当你想要新增自己的聊天指令处理器时，实现这个接口即可。最后，不要忘记在init里调用register
 type cmdHandler interface {
 	// Name 群友输入聊天指令时，第一个空格前的内容。
 	Name() string

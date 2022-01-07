@@ -68,8 +68,9 @@ schedule:
 ## 模块
 
 - bilibili 和B站相关的代码
-- commandHandler QQ聊天中输入的命令。想要新增命令，继承`cmdHandler`接口并在`init()`中调用`register()`即可
-- db 一个嵌入式Key-Value型数据库，使用这个模块存储的数据会被存在硬盘里，下次重启后仍然保留。
+- chatPipeline 非命令式的QQ聊天消息处理。想要新增，实现`pipelineHandler`接口并在`init()`中调用`register()`即可
+- commandHandler QQ聊天中输入的命令。想要新增命令，实现`cmdHandler`接口并在`init()`中调用`register()`即可
+- db 一个嵌入式Key-Value型数据库，使用这个模块存储的数据会被存在硬盘里，下次重启后仍然保留
 - perm 权限管理，管理员和白名单
 - main.go 程序入口
 
@@ -88,7 +89,7 @@ schedule:
 - [x] 管理员、白名单
 - [x] B站开播、修改直播标题、查询直播状态
 - [x] 随作品、随机体
-- [ ] B站视频解析
+- [x] B站视频解析
 - [ ] B站视频推送
 - [ ] 投票
 - [ ] 查新闻
