@@ -6,6 +6,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
+	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/chatPipeline"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/spf13/viper"
