@@ -8,7 +8,30 @@
 [![](https://img.shields.io/github/license/Touhou-Freshman-Camp/tfcc-bot-go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
 
-这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)编写
+这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)编写。
+
+功能正在陆续从[原Python项目](https://github.com/Touhou-Freshman-Camp/Touhou-Freshman-Camp-Robot)中迁移过来
+
+## 声明
+
+* 本项目采用`AGPLv3`协议开源。同时**强烈建议**各位开发者遵循以下原则：
+  * **任何间接接触本项目的软件也要求使用`AGPLv3`协议开源**
+  * **不鼓励，不支持一切商业用途**
+* **由于使用本项目提供的接口、文档等造成的不良影响和后果与本人和红群无关**
+* 由于本项目的特殊性，可能随时停止开发或删档
+* 本项目为开源项目，不接受任何的催单和索取行为
+
+## 使用方法
+
+编译：
+
+```bash
+go build -o tfcc-bot.exe
+```
+
+然后双击运行生成出来的`tfcc-bot.exe`即可。比较建议在cmd窗口中输入`tfcc-bot.exe`运行，以防panic后报错信息无法看到。
+
+在功能完善后，会将编译好的包放在Release中供大家下载。
 
 ## 配置文件
 
@@ -16,23 +39,23 @@
 
 ```yaml
 bilibili:
-  area_v2: "236"  # 直播分区，236-主机游戏
-  mid: "12345678"  # B站ID
-  password: "12345678"  # 密码
-  room_id: "12345678"  # B站直播间房间号
+  area_v2: "236"           # 直播分区，236-主机游戏
+  mid: "12345678"          # B站ID
+  password: "12345678"     # 密码
+  room_id: "12345678"      # B站直播间房间号
   username: "13888888888"  # B站用户名
 bot:
-  account: 0  # 机器人QQ号
+  account: 0    # 机器人QQ号
   password: ""  # 机器人密码（不填就是扫码登录）
 qq:
   super_admin_qq: 12345678  # 主管理员QQ号
 repeater_interruption:
   allowance: 5  # 打断复读功能限制的复读次数
   cool_down: 3  # 打断复读冷却时间（秒）
-  qq_group:  # 打断复读的Q群
+  qq_group:     # 打断复读的Q群
   - 12345678
 schedule:
-  before:  # 预约功能提前提醒时间
+  before:    # 预约功能提前提醒时间（秒）
   - 10800
   - 21600
   qq_group:  # 预约功能提前QQ群
@@ -54,7 +77,7 @@ schedule:
 
 以下文件会在运行时自动生成
 
-- assets/database/ 是db模块的缓存文件
+- assets/database/ 是db模块的数据文件
 - log/ 日志文件
 - application.yaml 是配置文件
 - device.json 是设备信息文件。不要删除，否则会被QQ认为你换了一台设备登录

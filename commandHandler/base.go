@@ -19,9 +19,13 @@ var logger = utils.GetModuleLogger("tfcc-bot-go.cmdHandler")
 
 // 这是聊天指令处理器的接口，当你想要新增自己的聊天指令处理器时，继承这个类即可。最后，不要忘记在init里调用register
 type cmdHandler interface {
+	// Name 群友输入聊天指令时，第一个空格前的内容。
 	Name() string
+	// ShowTips 在【帮助列表】中应该如何显示这个命令。空字符串表示不显示
 	ShowTips(groupCode int64, senderId int64) string
+	// CheckAuth 如果他有权限执行这个指令，则返回True，否则返回False
 	CheckAuth(groupCode int64, senderId int64) bool
+	// Execute content参数是除开指令名（第一个空格前的部分）以外剩下的所有内容。返回值分别是要发送的群聊消息和私聊消息，为空就是不发送消息。
 	Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage)
 }
 
@@ -89,11 +93,14 @@ func (m *mh) Serve(b *bot.Bot) {
 				if groupMsg != nil {
 					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
 					if retGroupMsg.Id == -1 {
-						logger.Info("消息被风控了")
+						logger.Info("群聊消息被风控了")
 					}
 				}
 				if privateMsg != nil {
-					c.SendPrivateMessage(msg.Sender.Uin, privateMsg)
+					retPrivateMsg := c.SendPrivateMessage(msg.Sender.Uin, privateMsg)
+					if retPrivateMsg.Id == -1 {
+						logger.Info("私聊消息被风控了")
+					}
 				}
 			}
 		}
