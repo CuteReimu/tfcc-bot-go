@@ -97,7 +97,7 @@ func (m *mh) Serve(b *bot.Bot) {
 					}
 				}
 				if privateMsg != nil {
-					retPrivateMsg := c.SendPrivateMessage(msg.Sender.Uin, privateMsg)
+					retPrivateMsg := c.SendGroupTempMessage(msg.GroupCode, msg.Sender.Uin, privateMsg)
 					if retPrivateMsg.Id == -1 {
 						logger.Info("私聊消息被风控了")
 					}
