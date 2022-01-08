@@ -2,8 +2,40 @@ package db
 
 import (
 	"github.com/dgraph-io/badger/v3"
+	"github.com/pkg/errors"
 	"time"
 )
+
+// Update 查找并修改值，返回原先是否存在。若原先不存在，则f的参数为nil。若f的返回值为nil，表示不进行Update
+func Update(key []byte, f func(oldValue []byte) []byte) (exists bool) {
+	err := DB.Update(func(txn *badger.Txn) error {
+		var newValue []byte
+		item, err := txn.Get(key)
+		if err == badger.ErrKeyNotFound {
+			newValue = f(nil)
+		} else if err != nil {
+			return errors.Wrapf(err, "update key failed, key: %s", string(key))
+		} else {
+			exists = true
+			err = item.Value(func(val []byte) error {
+				newValue = f(val)
+				return nil
+			})
+			if err != nil {
+				return errors.Wrapf(err, "update key failed, key: %s", string(key))
+			}
+		}
+		if newValue == nil {
+			return nil
+		}
+		err = txn.Set(key, newValue)
+		return err
+	})
+	if err != nil {
+		logger.WithError(err).Errorf("update key failed, key: %s\n", string(key))
+	}
+	return
+}
 
 // Set 设置键值对，ttl是超时时间（可选）
 func Set(key, value []byte, ttl ...time.Duration) {
@@ -16,7 +48,7 @@ func Set(key, value []byte, ttl ...time.Duration) {
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("set key value failed: {%s, %s}", string(key), string(value))
+		logger.WithError(err).Errorf("set key value failed: {%s, %s}\n", string(key), string(value))
 	}
 }
 
@@ -27,7 +59,7 @@ func Del(key []byte) {
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("delete key failed: %s", string(key))
+		logger.WithError(err).Errorf("delete key failed: %s\n", string(key))
 	}
 }
 
@@ -38,13 +70,13 @@ func Get(key []byte) (value []byte) {
 		if err == badger.ErrKeyNotFound {
 			return nil
 		} else if err != nil {
-			logger.WithError(err).Errorf("get failed, key: %s", string(key))
+			return errors.Wrapf(err, "get failed, key: %s", string(key))
 		}
 		value, err = item.ValueCopy(nil)
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("get failed, key: %s", string(key))
+		logger.WithError(err).Errorf("get failed, key: %s\n", string(key))
 	}
 	return
 }

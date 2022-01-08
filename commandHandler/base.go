@@ -52,6 +52,7 @@ func (m *mh) PostInit() {
 }
 
 func (m *mh) Serve(b *bot.Bot) {
+	initSchedule(b)
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
 		var isAt bool
 		elem := msg.Elements
@@ -80,6 +81,9 @@ func (m *mh) Serve(b *bot.Bot) {
 			if isAt {
 				tips(c, msg)
 			}
+			return
+		}
+		if strings.Contains(content, "\n") || strings.Contains(content, "\r") {
 			return
 		}
 		if handler, ok := handlers[cmd]; ok {
@@ -119,7 +123,9 @@ func tips(c *client.QQClient, msg *message.GroupMessage) {
 	for _, handler := range handlers {
 		if handler.CheckAuth(msg.GroupCode, msg.Sender.Uin) {
 			tip := handler.ShowTips(msg.GroupCode, msg.Sender.Uin)
-			ret = append(ret, tip)
+			if len(tip) > 0 {
+				ret = append(ret, tip)
+			}
 		}
 	}
 	c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText("你可以使用以下功能：\n"+strings.Join(ret, "\n"))))

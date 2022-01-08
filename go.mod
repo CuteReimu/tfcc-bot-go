@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e
 	github.com/Mrs4s/MiraiGo v0.0.0-20220106125209-41a6cb05a7da
+	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.2
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/go-resty/resty/v2 v2.7.0
