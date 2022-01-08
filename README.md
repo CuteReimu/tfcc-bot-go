@@ -98,3 +98,17 @@ schedule:
 - [x] 增加预约功能
 - [ ] 查询分数表
 - [ ] 打断复读
+
+## 第三方库的使用
+
+- github.com/Mrs4s/MiraiGo 一个移植于mirai的golang实现的库
+- github.com/Logiase/MiraiGo-Template 基于MiraiGo的多模块设计组合
+- github.com/dgraph-io/badger 一个强大的内嵌的数据库系统
+- github.com/sirupsen/logrus 一个强大的日志库
+- github.com/go-resty/resty 强大的Http Client库
+- github.com/tidwall/gjson 易用的json解析库
+- github.com/spf13/viper 强大的config解析库
+- github.com/ozgio/strutil 一个字符串处理库
+- github.com/araddon/dateparse 一个可以识别任意格式日期的库
+- github.com/dlclark/regexp2 完整版的正则表达式库
+- github.com/pkg/errors 可以将golang本身的error包装的库
