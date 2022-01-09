@@ -74,3 +74,52 @@ func GetVideoInfoByShortUrl(shortUrl string) (*VideoInfo, error) {
 	}
 	return GetVideoInfoByBvid(ret[0][0])
 }
+
+type OrderType string
+
+const (
+	OrderPubDate OrderType = "pubdate"
+	OrderClick   OrderType = "click"
+	OrderStow    OrderType = "stow"
+)
+
+type Video struct {
+	Bvid        string `json:"bvid,omitempty"`
+	Pic         string `json:"pic,omitempty"`
+	Title       string `json:"title,omitempty"`
+	Description string `json:"description,omitempty"`
+	Author      string `json:"author,omitempty"`
+}
+
+type UserVideo struct {
+	Code    int    `json:"code,omitempty"`
+	Message string `json:"message,omitempty"`
+	Data    struct {
+		List struct {
+			Vlist []Video `json:"vlist,omitempty"`
+		}
+	} `json:"data,omitempty"`
+}
+
+func GetUserVideo(mid int, order OrderType, tid int, keyword string, pn int, ps int) (*UserVideo, error) {
+	resp, err := resty.New().SetTimeout(20*time.Second).SetHeader("Content-Type", "data/json").SetLogger(logger).SetCookies(cookies).R().SetQueryParams(map[string]string{
+		"mid":     strconv.Itoa(mid),
+		"order":   string(order),
+		"tid":     strconv.Itoa(tid),
+		"keyword": keyword,
+		"pn":      strconv.Itoa(pn),
+		"ps":      strconv.Itoa(ps),
+	}).Get("https://api.bilibili.com/x/space/arc/search")
+	if err != nil {
+		return nil, errors.Wrap(err, "获取用户视频失败")
+	}
+	if resp.StatusCode() != 200 {
+		return nil, errors.Errorf("获取用户视频失败，错误码：%d", resp.StatusCode())
+	}
+	var ret *UserVideo
+	err = json.Unmarshal(resp.Body(), &ret)
+	if err != nil {
+		return nil, errors.Wrap(err, "解析json失败")
+	}
+	return ret, nil
+}

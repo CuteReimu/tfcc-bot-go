@@ -16,8 +16,9 @@ import (
 )
 
 func initSchedule(b *bot.Bot) {
-	ticker := time.NewTicker(time.Second * 30)
 	go func() {
+		ticker := time.NewTicker(time.Second * 30)
+		defer ticker.Stop()
 		for {
 			<-ticker.C
 			now := time.Now().Unix()
@@ -84,7 +85,6 @@ func initSchedule(b *bot.Bot) {
 			}
 			if fatalErr {
 				logger.Error("定时任务功能出现严重异常，已停止")
-				ticker.Stop()
 				return
 			}
 		}

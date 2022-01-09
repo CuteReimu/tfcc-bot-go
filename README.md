@@ -10,8 +10,6 @@
 
 这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)编写。
 
-功能正在陆续从[原Python项目](https://github.com/Touhou-Freshman-Camp/Touhou-Freshman-Camp-Robot)中迁移过来
-
 ## 声明
 
 * 本项目采用`AGPLv3`协议开源。同时**强烈建议**各位开发者遵循以下原则：
@@ -92,7 +90,7 @@ schedule:
 - [x] B站开播、修改直播标题、查询直播状态
 - [x] 随作品、随机体
 - [x] B站视频解析
-- [ ] B站视频推送
+- [x] B站视频推送
 - [x] 投票
 - [x] 查新闻
 - [x] 增加预约功能
