@@ -9,8 +9,6 @@ import (
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/araddon/dateparse"
-	"github.com/dgraph-io/badger/v3"
-	"github.com/pkg/errors"
 	"regexp"
 	"strconv"
 	"strings"
@@ -25,22 +23,16 @@ func initSchedule(b *bot.Bot) {
 			now := time.Now().Unix()
 			fatalErr := false
 			var tiggeredData []*scheduleData
-			err := db.DB.Update(func(txn *badger.Txn) error {
-				item, err := txn.Get([]byte("schedule"))
-				if err == badger.ErrKeyNotFound {
+			db.Update([]byte("schedule"), func(oldValue []byte) []byte {
+				if oldValue == nil {
 					return nil
-				} else if err != nil {
-					return errors.Wrap(err, "数据库出现异常")
-				}
-				val, err := item.ValueCopy(nil)
-				if err != nil {
-					return errors.Wrap(err, "copy value failed")
 				}
 				var data []*scheduleData
-				err = json.Unmarshal(val, &data)
+				err := json.Unmarshal(oldValue, &data)
 				if err != nil {
 					fatalErr = true
-					return errors.Wrap(err, "unmarshal json failed")
+					logger.WithError(err).Errorln("unmarshal json failed")
+					return nil
 				}
 				var updated bool
 				// 删除过期的事件
@@ -74,15 +66,14 @@ func initSchedule(b *bot.Bot) {
 				if updated {
 					buf, err := json.Marshal(data)
 					if err != nil {
-						return errors.Wrap(err, "json marshal failed")
+						logger.WithError(err).Errorln("json marshal failed")
+						return nil
 					}
-					return txn.Set([]byte("schedule"), buf)
+					return buf
 				}
 				return nil
 			})
-			if err != nil {
-				logger.WithError(err).Errorln("定时任务执行失败")
-			} else if len(tiggeredData) > 0 {
+			if len(tiggeredData) > 0 {
 				text := "温馨提醒："
 				for _, d := range tiggeredData {
 					text += fmt.Sprintf("\n%s 将于%s开始", d.Tips, time.Unix(d.EndTime, 0).Format("2006/01/02 15:04:05"))
