@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// Update 查找并修改值，返回原先是否存在。若原先不存在，则f的参数为nil。若f的返回值为nil，表示不进行Update
+// Update 查找并修改值，返回原先是否存在。若原先不存在，则f的参数为nil。若f的返回值为nil，表示不进行Update。若f的返回值为空byte数组，表示删除。
 func Update(key []byte, f func(oldValue []byte) []byte) (exists bool) {
 	err := DB.Update(func(txn *badger.Txn) error {
 		var newValue []byte
@@ -27,8 +27,11 @@ func Update(key []byte, f func(oldValue []byte) []byte) (exists bool) {
 		}
 		if newValue == nil {
 			return nil
+		} else if len(newValue) == 0 {
+			err = txn.Delete(key)
+		} else {
+			err = txn.Set(key, newValue)
 		}
-		err = txn.Set(key, newValue)
 		return err
 	})
 	if err != nil {
