@@ -9,6 +9,7 @@ import (
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/chatPipeline"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
+	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/videoPusher"
 	"github.com/spf13/viper"
 	"os"
