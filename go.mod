@@ -13,6 +13,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.10.1
 	github.com/tidwall/gjson v1.12.1
+	github.com/yangwenmai/ratelimit v0.0.0-20180104140304-44221c2292e1
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
@@ -45,6 +46,7 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
+	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/spf13/afero v1.8.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
