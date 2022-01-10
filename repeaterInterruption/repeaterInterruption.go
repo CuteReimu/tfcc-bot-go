@@ -1,7 +1,7 @@
 package repeaterInterruption
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
@@ -54,7 +54,7 @@ func (m *mh) Serve(b *bot.Bot) {
 		}
 		data.Lock()
 		defer data.Unlock()
-		m := parseMessage(msg.Elements)
+		m := msg.ToString()
 		if m != data.lastMessage {
 			data.counter = 1
 			data.lastMessage = m
@@ -90,17 +90,17 @@ func (m *mh) Stop(_ *bot.Bot, wg *sync.WaitGroup) {
 	defer wg.Done()
 }
 
-func parseMessage(elements []message.IMessageElement) string {
-	var s []string
-	for _, e := range elements {
-		if text, ok := e.(*message.TextElement); ok {
-			content := strings.TrimSpace(text.Content)
-			s = append(s, content)
-		} else if img, ok := e.(*message.GroupImageElement); ok {
-			s = append(s, fmt.Sprintf("[pic={%s}]", img.ImageId))
-		} else if at, ok := e.(*message.AtElement); ok {
-			s = append(s, fmt.Sprintf("[<@%d>]", at.Target))
-		}
-	}
-	return strings.Join(s, "")
-}
+// func parseMessage(elements []message.IMessageElement) string {
+// 	var s []string
+// 	for _, e := range elements {
+// 		if text, ok := e.(*message.TextElement); ok {
+// 			content := strings.TrimSpace(text.Content)
+// 			s = append(s, content)
+// 		} else if img, ok := e.(*message.GroupImageElement); ok {
+// 			s = append(s, fmt.Sprintf("[pic={%s}]", img.ImageId))
+// 		} else if at, ok := e.(*message.AtElement); ok {
+// 			s = append(s, fmt.Sprintf("[<@%d>]", at.Target))
+// 		}
+// 	}
+// 	return strings.Join(s, "")
+// }
