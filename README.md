@@ -61,6 +61,8 @@ schedule:
   qq_group:  # 预约功能提醒QQ群
   - 12345678
   video_push_delay: 600  # 视频推送间隔
+thwiki:
+  enable: false  # 是否开启查新闻功能
 ```
 
 修改配置文件后重新启动即可。
@@ -92,7 +94,7 @@ schedule:
 - [x] B站视频解析
 - [x] B站视频推送
 - [x] 投票
-- [ ] ~~查新闻（考虑到意义不大，现删去此功能）~~
+- [x] 查新闻
 - [x] 增加预约功能
 - [x] [查询分数表](tfcc/README.md)
 - [x] 打断复读

@@ -77,6 +77,7 @@ func writeConfig() {
 	config.GlobalConfig.Set("bilibili.mid", "12345678")
 	config.GlobalConfig.Set("bilibili.room_id", "12345678")
 	config.GlobalConfig.Set("bilibili.area_v2", "236")
+	config.GlobalConfig.Set("thwiki.enable", false)
 	err := config.GlobalConfig.WriteConfigAs("application.yaml")
 	if err != nil {
 		fmt.Println("生成application.yaml失败，请检查")
