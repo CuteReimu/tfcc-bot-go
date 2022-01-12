@@ -1,9 +1,9 @@
 package commandHandler
 
 import (
+	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/ozgio/strutil"
-	"github.com/yangwenmai/ratelimit/simpleratelimit"
 	"math/rand"
 	"sync"
 	"time"
@@ -101,6 +101,12 @@ func (r *randCharacter) Execute(_ *message.GroupMessage, content string) (groupM
 		groupMsg = message.NewSendingMessage().Append(message.NewText(ret))
 	}
 	return
+}
+
+type randSpellData struct {
+	sync.Mutex
+	lastRandTime time.Time
+	count        int64
 }
 
 type randSpell struct {
@@ -255,15 +261,28 @@ func (r *randSpell) CheckAuth(int64, int64) bool {
 
 func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	if len(content) == 0 {
-		groupMsg = message.NewSendingMessage().Append(message.NewText(`请输入要随机的作品，例如：“随符卡 红”或“随符卡 全部”（每2分钟最多使用2次）`))
-		return
-	}
-	rl, _ := r.rl.LoadOrStore(msg.Sender.Uin, simpleratelimit.New(2, 2*time.Minute))
-	if rl.(*simpleratelimit.RateLimiter).Limit() {
+		groupMsg = message.NewSendingMessage().Append(message.NewText(`请输入要随机的作品，例如：“随符卡 红”或“随符卡 全部”（每天最多使用10次）`))
 		return
 	}
 	if val, ok := r.gameMap[content]; ok {
-		groupMsg = message.NewSendingMessage().Append(message.NewText(val[rand.Intn(len(val))]))
+		rl, _ := r.rl.LoadOrStore(msg.Sender.Uin, &randSpellData{})
+		d := rl.(*randSpellData)
+		d.Lock()
+		defer d.Unlock()
+		now := time.Now()
+		yy, mm, dd := now.Date()
+		yy2, mm2, dd2 := d.lastRandTime.Date()
+		if !(yy == yy2 && mm == mm2 && dd == dd2) {
+			d.count = 0
+		}
+		d.count++
+		limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
+		if d.count <= limitCount {
+			groupMsg = message.NewSendingMessage().Append(message.NewText(val[rand.Intn(len(val))]))
+		} else if d.count == limitCount+1 {
+			groupMsg = message.NewSendingMessage().Append(message.NewText("随符卡一天只能使用10次"))
+		}
+		d.lastRandTime = now
 	}
 	return
 }

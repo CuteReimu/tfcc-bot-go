@@ -65,6 +65,7 @@ func writeConfig() {
 	config.GlobalConfig = &config.Config{Viper: viper.New()}
 	config.GlobalConfig.Set("bot.account", int64(0))
 	config.GlobalConfig.Set("bot.password", "")
+	config.GlobalConfig.Set("qq.rand_count", int64(10))
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
 	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("schedule.before", []int64{3 * 3600, 6 * 3600})
