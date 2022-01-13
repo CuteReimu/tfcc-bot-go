@@ -5,6 +5,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
+	"strings"
 	"sync"
 )
 
@@ -45,20 +46,29 @@ func (m *mh) PostInit() {
 
 func (m *mh) Serve(b *bot.Bot) {
 	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
-		elem := msg.Elements
-		if len(elem) != 1 {
+		var text []string
+		for _, elem := range msg.Elements {
+			switch e := elem.(type) {
+			case *message.ReplyElement:
+			case *message.AtElement:
+			case *message.TextElement:
+				text = append(text, strings.TrimSpace(e.Content))
+			default:
+				return
+			}
+		}
+		content := strings.Join(text, "")
+		if len(content) == 0 {
 			return
 		}
-		if text, ok := elem[0].(*message.TextElement); ok {
-			for _, handler := range handlers {
-				groupMsg := handler.Execute(c, msg, text.Content)
-				if groupMsg != nil {
-					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
-					if retGroupMsg.Id == -1 {
-						logger.Info("群聊消息被风控了")
-					}
-					break
+		for _, handler := range handlers {
+			groupMsg := handler.Execute(c, msg, content)
+			if groupMsg != nil {
+				retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
+				if retGroupMsg.Id == -1 {
+					logger.Info("群聊消息被风控了")
 				}
+				break
 			}
 		}
 	})
