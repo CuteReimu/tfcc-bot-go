@@ -1,6 +1,7 @@
 package commandHandler
 
 import (
+	"fmt"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/ozgio/strutil"
@@ -261,7 +262,7 @@ func (r *randSpell) CheckAuth(int64, int64) bool {
 
 func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	if len(content) == 0 {
-		groupMsg = message.NewSendingMessage().Append(message.NewText(`请输入要随机的作品，例如：“随符卡 红”或“随符卡 全部”（每天最多使用10次）`))
+		groupMsg = message.NewSendingMessage().Append(message.NewText(`请输入要随机的作品，例如：“随符卡 红”或“随符卡 全部”`))
 		return
 	}
 	if val, ok := r.gameMap[content]; ok {
@@ -280,7 +281,7 @@ func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg
 		if d.count <= limitCount {
 			groupMsg = message.NewSendingMessage().Append(message.NewText(val[rand.Intn(len(val))]))
 		} else if d.count == limitCount+1 {
-			groupMsg = message.NewSendingMessage().Append(message.NewText("随符卡一天只能使用10次"))
+			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
 		}
 		d.lastRandTime = now
 	}
