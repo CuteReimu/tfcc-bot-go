@@ -5,10 +5,10 @@ import (
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/ozgio/strutil"
-	regexp "github.com/dlclark/regexp2"
 	"math/rand"
 	"sync"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -115,7 +115,6 @@ type randSpellData struct {
 type randSpell struct {
 	rl      sync.Map
 	gameMap map[string][]string
-	reg *regexp.Regexp
 }
 
 func newRandSpell() *randSpell {
@@ -234,7 +233,6 @@ func newRandSpell() *randSpell {
 				"狐符「狐之绞盘」", "管狐「圆管之狐」", "星狐「天狐龙星之舞」", "蛊毒「食人昆虫」", "蛊毒「洞穴蜂群」", "蛊毒「飞天蜈蚣」", "采掘「不断累积的矿山废石」", "采掘「矿山爆破」", "采掘「妖怪们的盾构法」", "大蜈蚣「噬蛇者」", "大蜈蚣「噬龙者」", "「蛊毒的美食家」", "「虫姬殿下的闪耀忙乱的日常」",
 			},
 		},
-		reg: regexp.MustCompile(`^(\w){0,5}(?: ([0-9]{0,2}))?`, regexp.None),
 	}
 	games := make([]string, 0, len(r.gameMap))
 	for k := range r.gameMap {
@@ -265,76 +263,59 @@ func (r *randSpell) CheckAuth(int64, int64) bool {
 }
 
 func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
-	res, _ := r.reg.FindStringMatch(content)
+	cmds := strings.Split(content, " ")
 	oneTimeLimit := config.GlobalConfig.GetUint64("qq.rand_one_time_limit")
-	if res == nil {
+	if len(content) == 0 {
 		groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入要随机的作品与符卡数量（可选，大于0，%d以内），例如：“随符卡 红”或“随符卡 全部 10”`, oneTimeLimit)))
 		return
+	}
+	content = cmds[0]
+	var count uint64
+	if len(cmds) == 1 {
+		count = 1 // 默认抽取一张符卡
 	} else {
-		content = res.GroupByNumber(1).String()
-		if len(content) == 0 {
-			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入要随机的作品与符卡数量（可选，大于0，%d以内），例如：“随符卡 红”或“随符卡 全部 10”`, oneTimeLimit)))
+		countStr := cmds[1]
+		var err error
+		count, err = strconv.ParseUint(countStr, 10, 32)
+		if err != nil || count == 0 || count > oneTimeLimit {
+			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入大于0%d以内数字，例如：“随符卡 红 2”或“随符卡 全部 10”`, oneTimeLimit)))
 			return
 		}
-		countStr := res.GroupByNumber(2).String()
-		var count uint64
-		if len(countStr) == 0 {
-			count = 1 // 默认抽取一张符卡
-		} else {
-			var err error
-			count, err = strconv.ParseUint(countStr, 10, 32)
-			if err != nil || count == 0 || count > oneTimeLimit {
-				groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入大于0%d以内数字，例如：“随符卡 红 2”或“随符卡 全部 10”`, oneTimeLimit)))
-				return
-			}
+	}
+	if val, ok := r.gameMap[content]; ok {
+		if int(count) > len(val) {
+			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入小于或等于该作符卡数量%d的数字`, len(val))))
+			return
 		}
-		if val, ok := r.gameMap[content]; ok {
-			if int(count) > len(val) {
-				groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入小于或等于该作符卡数量%d的数字`, len(val))))
-				return
-			}
-			rl, _ := r.rl.LoadOrStore(msg.Sender.Uin, &randSpellData{})
-			d := rl.(*randSpellData)
-			d.Lock()
-			defer d.Unlock()
-			now := time.Now()
-			yy, mm, dd := now.Date()
-			yy2, mm2, dd2 := d.lastRandTime.Date()
-			if !(yy == yy2 && mm == mm2 && dd == dd2) {
-				d.count = 0
-			}
-			d.count++
-			limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
-			if d.count <= limitCount {
-				result := make([]string, 0, count)
-				acc : for n := uint64(0); n < count; n++ {
-					newCard := val[rand.Intn(len(val))]
-					if n == 0 {
-						result = append(result, newCard)
-						continue
-					}
-					for _, c := range result {
-						if c == newCard {
-							n--
-							continue acc
-						}
-					}
-					result = append(result, newCard)
-				}
-				text := ""
-				for i, c := range result {
-					if i == 0 {
-						text += c
-					} else {
-						text += "，" + c
-					}
-				}
-				groupMsg = message.NewSendingMessage().Append(message.NewText(text))
-			} else if d.count == limitCount+1 {
-				groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
-			}
-			d.lastRandTime = now
+		rl, _ := r.rl.LoadOrStore(msg.Sender.Uin, &randSpellData{})
+		d := rl.(*randSpellData)
+		d.Lock()
+		defer d.Unlock()
+		now := time.Now()
+		yy, mm, dd := now.Date()
+		yy2, mm2, dd2 := d.lastRandTime.Date()
+		if !(yy == yy2 && mm == mm2 && dd == dd2) {
+			d.count = 0
 		}
+		d.count++
+		limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
+		if d.count <= limitCount {
+			rand.Shuffle(int(count), func(i, j int) {
+				val[i], val[j] = val[j], val[i]
+			})
+			text := ""
+			for i := 0; i < int(count); i++ {
+				if i == 0 {
+					text += val[i]
+				} else {
+					text += "，" + val[i]
+				}
+			}
+			groupMsg = message.NewSendingMessage().Append(message.NewText(text))
+		} else if d.count == limitCount+1 {
+			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
+		}
+		d.lastRandTime = now
 	}
 	return
 }
