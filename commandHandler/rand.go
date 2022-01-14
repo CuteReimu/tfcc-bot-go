@@ -300,11 +300,12 @@ func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg
 		d.count++
 		limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
 		if d.count <= limitCount {
-			rand.Shuffle(int(count), func(i, j int) {
-				val[i], val[j] = val[j], val[i]
-			})
 			text := ""
 			for i := 0; i < int(count); i++ {
+				index := i + rand.Intn(len(val) - i)
+				if i != index {
+					val[i], val[index] = val[index], val[i]
+				}
 				if i == 0 {
 					text += val[i]
 				} else {
