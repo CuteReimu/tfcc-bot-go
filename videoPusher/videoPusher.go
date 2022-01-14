@@ -9,6 +9,7 @@ import (
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/go-resty/resty/v2"
 	"github.com/ozgio/strutil"
 	"sync"
@@ -76,7 +77,12 @@ func (m *mh) Serve(b *bot.Bot) {
 						video.Description = newStr + "。。。"
 					}
 					groupMsg.Append(message.NewText(fmt.Sprintf(text+"%s\nhttps://www.bilibili.com/video/%s\nUP主：%s\n视频简介：%s", video.Title, video.Bvid, video.Author, video.Description)))
-					b.SendGroupMessage(groupCode, groupMsg)
+					retGroupMsg := b.SendGroupMessage(groupCode, groupMsg)
+					if retGroupMsg.Id == -1 {
+						logger.Info("群聊消息被风控了")
+					} else {
+						repeaterInterruption.Clean(groupCode)
+					}
 				}
 			}
 		}

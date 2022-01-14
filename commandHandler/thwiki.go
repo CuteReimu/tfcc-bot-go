@@ -3,6 +3,7 @@ package commandHandler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/go-resty/resty/v2"
 	"sort"
@@ -83,15 +84,15 @@ func newGetThwikiEvent() *getThwikiEvent {
 }
 
 func (e *getThwikiEvent) Name() string {
-	return "看新闻"
+	return "查新闻"
 }
 
 func (e *getThwikiEvent) ShowTips(int64, int64) string {
-	return "看新闻"
+	return "查新闻"
 }
 
 func (e *getThwikiEvent) CheckAuth(int64, int64) bool {
-	return true
+	return config.GlobalConfig.GetBool("thwiki.enable")
 }
 
 func (e *getThwikiEvent) Execute(msg *message.GroupMessage, _ string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {

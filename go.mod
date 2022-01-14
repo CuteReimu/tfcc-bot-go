@@ -32,7 +32,7 @@ require (
 	github.com/google/flatbuffers v2.0.5+incompatible // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/klauspost/compress v1.13.6 // indirect
+	github.com/klauspost/compress v1.14.1 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible // indirect
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -55,9 +55,9 @@ require (
 	github.com/tuotoo/qrcode v0.0.0-20190222102259-ac9c44189bf2 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	golang.org/x/net v0.0.0-20220107192237-5cfca573fb4d // indirect
+	golang.org/x/net v0.0.0-20220111093109-d55c255bac03 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
+	golang.org/x/sys v0.0.0-20220111092808-5a964db01320 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect

@@ -65,6 +65,7 @@ func writeConfig() {
 	config.GlobalConfig = &config.Config{Viper: viper.New()}
 	config.GlobalConfig.Set("bot.account", int64(0))
 	config.GlobalConfig.Set("bot.password", "")
+	config.GlobalConfig.Set("qq.rand_count", int64(10))
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
 	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("schedule.before", []int64{3 * 3600, 6 * 3600})
@@ -77,6 +78,7 @@ func writeConfig() {
 	config.GlobalConfig.Set("bilibili.mid", "12345678")
 	config.GlobalConfig.Set("bilibili.room_id", "12345678")
 	config.GlobalConfig.Set("bilibili.area_v2", "236")
+	config.GlobalConfig.Set("thwiki.enable", false)
 	err := config.GlobalConfig.WriteConfigAs("application.yaml")
 	if err != nil {
 		fmt.Println("生成application.yaml失败，请检查")
