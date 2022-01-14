@@ -6,9 +6,9 @@ import (
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/ozgio/strutil"
 	"math/rand"
-	"sync"
 	"strconv"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -263,27 +263,27 @@ func (r *randSpell) CheckAuth(int64, int64) bool {
 }
 
 func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
-	cmds := strings.Split(content, " ")
-	oneTimeLimit := config.GlobalConfig.GetUint64("qq.rand_one_time_limit")
+	oneTimeLimit := config.GlobalConfig.GetInt("qq.rand_one_time_limit")
 	if len(content) == 0 {
-		groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入要随机的作品与符卡数量（可选，大于0，%d以内），例如：“随符卡 红”或“随符卡 全部 10”`, oneTimeLimit)))
+		groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入要随机的作品与符卡数量，例如：“随符卡 红”或“随符卡 全部 %d”`, oneTimeLimit)))
 		return
 	}
+	cmds := strings.Split(content, " ")
 	content = cmds[0]
-	var count uint64
-	if len(cmds) == 1 {
+	var count int
+	if len(cmds) <= 1 {
 		count = 1 // 默认抽取一张符卡
 	} else {
 		countStr := cmds[1]
 		var err error
-		count, err = strconv.ParseUint(countStr, 10, 32)
+		count, err = strconv.Atoi(countStr)
 		if err != nil || count == 0 || count > oneTimeLimit {
-			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入大于0%d以内数字，例如：“随符卡 红 2”或“随符卡 全部 10”`, oneTimeLimit)))
+			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入%d以内数字，例如：“随符卡 红 %d”或“随符卡 全部 %d”`, oneTimeLimit, oneTimeLimit, oneTimeLimit)))
 			return
 		}
 	}
 	if val, ok := r.gameMap[content]; ok {
-		if int(count) > len(val) {
+		if count > len(val) {
 			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入小于或等于该作符卡数量%d的数字`, len(val))))
 			return
 		}
@@ -300,19 +300,15 @@ func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg
 		d.count++
 		limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
 		if d.count <= limitCount {
-			text := ""
-			for i := 0; i < int(count); i++ {
-				index := i + rand.Intn(len(val) - i)
+			var text []string
+			for i := 0; i < count; i++ {
+				index := i + rand.Intn(len(val)-i)
 				if i != index {
 					val[i], val[index] = val[index], val[i]
 				}
-				if i == 0 {
-					text += val[i]
-				} else {
-					text += "，" + val[i]
-				}
+				text = append(text, val[i])
 			}
-			groupMsg = message.NewSendingMessage().Append(message.NewText(text))
+			groupMsg = message.NewSendingMessage().Append(message.NewText(strings.Join(text, "，")))
 		} else if d.count == limitCount+1 {
 			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
 		}
