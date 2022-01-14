@@ -1,6 +1,7 @@
 package commandHandler
 
 import (
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"strings"
 	"sync"
 
@@ -98,6 +99,8 @@ func (m *mh) Serve(b *bot.Bot) {
 					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
 					if retGroupMsg.Id == -1 {
 						logger.Info("群聊消息被风控了")
+					} else {
+						repeaterInterruption.Clean(msg.GroupCode)
 					}
 				}
 				if privateMsg != nil {

@@ -16,6 +16,16 @@ func init() {
 	bot.RegisterModule(instance)
 }
 
+func Clean(groupCode int64) {
+	data, ok := instance.data[groupCode]
+	if ok {
+		data.Lock()
+		defer data.Unlock()
+		data.lastMessage = ""
+		data.counter = 0
+	}
+}
+
 var instance = &mh{data: make(map[int64]*repeaterData)}
 var logger = utils.GetModuleLogger("tfcc-bot-go.repeaterInterruption")
 
@@ -70,13 +80,11 @@ func (m *mh) Serve(b *bot.Bot) {
 					}
 					data.counter = 1
 					data.lastTrigger = now
-					go func() {
-						groupMsg := message.NewSendingMessage().Append(message.NewText(text))
-						retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
-						if retGroupMsg.Id == -1 {
-							logger.Info("群聊消息被风控了")
-						}
-					}()
+					groupMsg := message.NewSendingMessage().Append(message.NewText(text))
+					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
+					if retGroupMsg.Id == -1 {
+						logger.Info("群聊消息被风控了")
+					}
 				}
 			}
 		}
