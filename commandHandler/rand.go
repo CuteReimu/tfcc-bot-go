@@ -1,14 +1,15 @@
 package commandHandler
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/ozgio/strutil"
 	"math/rand"
 	"strconv"
 	"strings"
-	"sync"
 	"time"
 )
 
@@ -107,13 +108,11 @@ func (r *randCharacter) Execute(_ *message.GroupMessage, content string) (groupM
 }
 
 type randSpellData struct {
-	sync.Mutex
-	lastRandTime time.Time
-	count        int64
+	LastRandTime int64
+	Count        int64
 }
 
 type randSpell struct {
-	rl      sync.Map
 	gameMap map[string][]string
 }
 
@@ -287,32 +286,46 @@ func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg
 			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf(`请输入小于或等于该作符卡数量%d的数字`, len(val))))
 			return
 		}
-		rl, _ := r.rl.LoadOrStore(msg.Sender.Uin, &randSpellData{})
-		d := rl.(*randSpellData)
-		d.Lock()
-		defer d.Unlock()
-		now := time.Now()
-		yy, mm, dd := now.Date()
-		yy2, mm2, dd2 := d.lastRandTime.Date()
-		if !(yy == yy2 && mm == mm2 && dd == dd2) {
-			d.count = 0
-		}
-		d.count++
-		limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
-		if d.count <= limitCount {
-			var text []string
-			for i := 0; i < count; i++ {
-				index := i + rand.Intn(len(val)-i)
-				if i != index {
-					val[i], val[index] = val[index], val[i]
+		db.UpdateWithTtl([]byte("rand_spell:"+strconv.FormatInt(msg.Sender.Uin, 10)), func(oldValue []byte) ([]byte, time.Duration) {
+			var d *randSpellData
+			if oldValue == nil {
+				d = &randSpellData{}
+			} else {
+				err := json.Unmarshal(oldValue, &d)
+				if err != nil {
+					logger.WithError(err).Errorln("unmarshal json failed")
+					return nil, 0
 				}
-				text = append(text, val[i])
 			}
-			groupMsg = message.NewSendingMessage().Append(message.NewText(strings.Join(text, "，")))
-		} else if d.count == limitCount+1 {
-			groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
-		}
-		d.lastRandTime = now
+			now := time.Now()
+			yy, mm, dd := now.Date()
+			yy2, mm2, dd2 := time.Unix(d.LastRandTime, 0).Date()
+			if !(yy == yy2 && mm == mm2 && dd == dd2) {
+				d.Count = 0
+			}
+			d.Count++
+			limitCount := config.GlobalConfig.GetInt64("qq.rand_count")
+			if d.Count <= limitCount {
+				var text []string
+				for i := 0; i < count; i++ {
+					index := i + rand.Intn(len(val)-i)
+					if i != index {
+						val[i], val[index] = val[index], val[i]
+					}
+					text = append(text, val[i])
+				}
+				groupMsg = message.NewSendingMessage().Append(message.NewText(strings.Join(text, "\n")))
+			} else if d.Count == limitCount+1 {
+				groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
+			}
+			d.LastRandTime = now.Unix()
+			newValue, err := json.Marshal(d)
+			if err != nil {
+				logger.WithError(err).Errorln("unmarshal json failed")
+				return nil, 0
+			}
+			return newValue, time.Hour * 24
+		})
 	}
 	return
 }

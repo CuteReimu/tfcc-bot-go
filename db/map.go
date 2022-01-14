@@ -6,6 +6,42 @@ import (
 	"time"
 )
 
+// UpdateWithTtl 同 Update ，但是有一个ttl
+func UpdateWithTtl(key []byte, f func(oldValue []byte) ([]byte, time.Duration)) (exists bool) {
+	err := DB.Update(func(txn *badger.Txn) error {
+		var newValue []byte
+		var ttl time.Duration
+		item, err := txn.Get(key)
+		if err == badger.ErrKeyNotFound {
+			newValue, ttl = f(nil)
+		} else if err != nil {
+			return errors.Wrapf(err, "update key failed, key: %s", string(key))
+		} else {
+			exists = true
+			err = item.Value(func(val []byte) error {
+				newValue, ttl = f(val)
+				return nil
+			})
+			if err != nil {
+				return errors.Wrapf(err, "update key failed, key: %s", string(key))
+			}
+		}
+		if newValue == nil {
+			return nil
+		} else if len(newValue) == 0 {
+			err = txn.Delete(key)
+		} else {
+			e := badger.NewEntry(key, newValue).WithTTL(ttl)
+			err = txn.SetEntry(e)
+		}
+		return err
+	})
+	if err != nil {
+		logger.WithError(err).Errorf("update key failed, key: %s\n", string(key))
+	}
+	return
+}
+
 // Update 查找并修改值，返回原先是否存在。若原先不存在，则f的参数为nil。若f的返回值为nil，表示不进行Update。若f的返回值为空byte数组，表示删除。
 func Update(key []byte, f func(oldValue []byte) []byte) (exists bool) {
 	err := DB.Update(func(txn *badger.Txn) error {
