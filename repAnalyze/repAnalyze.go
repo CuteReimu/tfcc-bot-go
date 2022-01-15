@@ -6,6 +6,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/go-resty/resty/v2"
 	"strings"
 	"sync"
@@ -43,7 +44,14 @@ func (m *mh) Serve(b *bot.Bot) {
 					url := c.GetGroupFileUrl(msg.GroupCode, e.Path, e.Busid)
 					fileInfo := fetchRepFileInfo(url)
 					if len(fileInfo) > 0 {
-						c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText(fileInfo)))
+						retGroupMsg := c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText(fileInfo)))
+						if retGroupMsg == nil {
+							logger.Info("群聊消息发送失败了")
+						} else if retGroupMsg.Id == -1 {
+							logger.Info("群聊消息被风控了")
+						} else {
+							repeaterInterruption.Clean(msg.GroupCode)
+						}
 					}
 				}
 			}

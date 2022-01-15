@@ -44,6 +44,8 @@ github.com/CuteReimu/threp v0.0.0-20220115161015-bd7be35c63d7 h1:dJihdyHntcUTVJn
 github.com/CuteReimu/threp v0.0.0-20220115161015-bd7be35c63d7/go.mod h1:IlZPzsp/9lbbeH+5Bc8z+gjWGvzb1zo8ZsHSzuTYY30=
 github.com/CuteReimu/threp v0.0.0-20220115164821-748393f83b11 h1:Mi7ICuq+XpwzcfbBwnDKApORIYILwCfQobs8+rIf/zU=
 github.com/CuteReimu/threp v0.0.0-20220115164821-748393f83b11/go.mod h1:IlZPzsp/9lbbeH+5Bc8z+gjWGvzb1zo8ZsHSzuTYY30=
+github.com/CuteReimu/threp v0.0.0-20220115170527-9196b3d55078 h1:/sSha3l59Ax6meeZjz4DDdpG2S7PKg65ZWv8fGnO2nY=
+github.com/CuteReimu/threp v0.0.0-20220115170527-9196b3d55078/go.mod h1:IlZPzsp/9lbbeH+5Bc8z+gjWGvzb1zo8ZsHSzuTYY30=
 github.com/CuteReimu/threp v0.0.0 h1:Gzn1JshYWC3JfavOwadNNq/bd8Cdf2E3L+qpZgrlOE0=
 github.com/CuteReimu/threp v0.0.0/go.mod h1:Uc8j26Of/EUVB3qa1yMzSqFN99pa8z4U3zy+t6d+mYU=
 github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e h1:1xhfwRvsh/iRzh6e8DSWjo7uCSdflCp+P4HXDCubhgE=

@@ -82,7 +82,9 @@ func (m *mh) Serve(b *bot.Bot) {
 					data.lastTrigger = now
 					groupMsg := message.NewSendingMessage().Append(message.NewText(text))
 					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
-					if retGroupMsg.Id == -1 {
+					if retGroupMsg == nil {
+						logger.Info("群聊消息发送失败了")
+					} else if retGroupMsg.Id == -1 {
 						logger.Info("群聊消息被风控了")
 					}
 				}

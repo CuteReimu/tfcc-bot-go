@@ -97,7 +97,9 @@ func (m *mh) Serve(b *bot.Bot) {
 				groupMsg, privateMsg := handler.Execute(msg, content)
 				if groupMsg != nil {
 					retGroupMsg := c.SendGroupMessage(msg.GroupCode, groupMsg)
-					if retGroupMsg.Id == -1 {
+					if retGroupMsg == nil {
+						logger.Info("群聊消息发送失败了")
+					} else if retGroupMsg.Id == -1 {
 						logger.Info("群聊消息被风控了")
 					} else {
 						repeaterInterruption.Clean(msg.GroupCode)

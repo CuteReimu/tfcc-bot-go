@@ -3,7 +3,7 @@ module github.com/Touhou-Freshman-Camp/tfcc-bot-go
 go 1.17
 
 require (
-	github.com/CuteReimu/threp v0.0.0-20220115164821-748393f83b11
+	github.com/CuteReimu/threp v0.0.0-20220115170527-9196b3d55078
 	github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e
 	github.com/Mrs4s/MiraiGo v0.0.0-20220115103726-38bb31b5a666
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
