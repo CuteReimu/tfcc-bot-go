@@ -1,5 +1,5 @@
 .idea/
-assets/
+/assets/database/
 
 session.token
 application.yaml
