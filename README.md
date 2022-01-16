@@ -21,6 +21,12 @@
 
 ## 使用方法
 
+建议在编译前更新一下依赖：
+
+```bash
+go get -u
+```
+
 编译：
 
 ```bash
@@ -101,6 +107,7 @@ thwiki:
 - [x] [查询分数表](tfcc/README.md)
 - [x] 打断复读
 - [x] 随符卡
+- [x] rep解析
 
 ## 第三方库的使用
 
@@ -115,3 +122,4 @@ thwiki:
 - github.com/araddon/dateparse 一个可以识别任意格式日期的库
 - github.com/dlclark/regexp2 完整版的正则表达式库
 - github.com/pkg/errors 可以将golang本身的error包装的库
+- github.com/CuteReimu/threp 一个东方replay文件的解析库
