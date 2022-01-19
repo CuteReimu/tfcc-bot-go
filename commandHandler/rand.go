@@ -254,7 +254,12 @@ func (r *randSpell) Execute(msg *message.GroupMessage, content string) (groupMsg
 				text := val.randN(count)
 				groupMsg = message.NewSendingMessage().Append(message.NewText(strings.Join(text, "\n")))
 			} else if d.Count == limitCount+1 {
-				groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("随符卡一天只能使用%d次", limitCount)))
+				relatedUrl := config.GlobalConfig.GetString("qq.related_url")
+				s := fmt.Sprintf("随符卡一天只能使用%d次", limitCount)
+				if len(relatedUrl) > 0 {
+					s += "\n你可以前往 " + relatedUrl + "继续使用"
+				}
+				groupMsg = message.NewSendingMessage().Append(message.NewText(s))
 			}
 			d.LastRandTime = now.Unix()
 			newValue, err := json.Marshal(d)

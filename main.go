@@ -68,6 +68,7 @@ func writeConfig() {
 	config.GlobalConfig.Set("bot.password", "")
 	config.GlobalConfig.Set("qq.rand_count", int64(10))
 	config.GlobalConfig.Set("qq.rand_one_time_limit", 2)
+	config.GlobalConfig.Set("qq.related_url", "")
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
 	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("schedule.before", []int64{3 * 3600, 6 * 3600})

@@ -54,8 +54,9 @@ bot:
   account: 0    # 机器人QQ号
   password: ""  # 机器人密码（不填就是扫码登录）
 qq:
-  rand_count: 10  # 每天随符卡限制次数
-  rand_one_time_limit: 20  # 单次随符卡的数量限制
+  rand_count: 10            # 每天随符卡限制次数
+  rand_one_time_limit: 20   # 单次随符卡的数量限制
+  related_url: ""           # 关联的网站网址
   super_admin_qq: 12345678  # 主管理员QQ号
 repeater_interruption:
   allowance: 5  # 打断复读功能限制的复读次数
