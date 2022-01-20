@@ -72,9 +72,6 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 	if len(content) != 0 {
 		return
 	}
-	if len(content) != 0 {
-		return
-	}
 	ret, err := bilibili.StartLive()
 	if err != nil {
 		logger.WithError(err).Errorln("开启直播间失败")
@@ -102,9 +99,7 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
 		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
 	}
-	rtmpAddr := ret.Data.Rtmp.Addr
-	rtmpCode := ret.Data.Rtmp.Code
-	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", rtmpAddr, rtmpCode)
+	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s",ret.Data.Rtmp.Addr, ret.Data.Rtmp.Code)
 	groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
 	privateMsg = message.NewSendingMessage().Append(message.NewText(privateText))
 	return
