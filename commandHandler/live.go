@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/ozgio/strutil"
+	"strconv"
 )
 
 func init() {
@@ -66,7 +68,7 @@ func (s *startLive) CheckAuth(_ int64, senderId int64) bool {
 	return perm.IsWhitelist(senderId)
 }
 
-func (s *startLive) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	if len(content) != 0 {
 		return
 	}
@@ -84,8 +86,20 @@ func (s *startLive) Execute(_ *message.GroupMessage, content string) (groupMsg *
 	}
 	var publicText string
 	if ret.Data.Change == 0 {
+		val := db.Get([]byte("bilibili_live"))
+		if val != nil {
+			uin, _ := strconv.ParseInt(string(val), 10, 64)
+			if uin != msg.Sender.Uin {
+				publicText = fmt.Sprintf("已经有人正在直播了\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
+				groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
+				return
+			}
+		} else {
+			db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
+		}
 		publicText = fmt.Sprintf("直播间本来就是开启的，推流码已私聊\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
 	} else {
+		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
 		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
 	}
 	rtmpAddr := ret.Data.Rtmp.Addr
@@ -110,9 +124,19 @@ func (s *stopLive) CheckAuth(_ int64, senderId int64) bool {
 	return perm.IsWhitelist(senderId)
 }
 
-func (s *stopLive) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+func (s *stopLive) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	if len(content) != 0 {
 		return
+	}
+	if !perm.IsAdmin(msg.Sender.Uin) {
+		val := db.Get([]byte("bilibili_live"))
+		if val != nil {
+			uin, _ := strconv.ParseInt(string(val), 10, 64)
+			if uin != msg.Sender.Uin {
+				groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突关闭直播"))
+				return
+			}
+		}
 	}
 	ret, err := bilibili.StopLive()
 	if err != nil {
@@ -123,6 +147,7 @@ func (s *stopLive) Execute(_ *message.GroupMessage, content string) (groupMsg *m
 		logger.Errorf("关闭直播间失败，错误码：%d，错误信息1：%s，错误信息2：%s\n", ret.Code, ret.Message, ret.Msg)
 		return
 	}
+	db.Del([]byte("bilibili_live"))
 	var text string
 	if ret.Data.Change == 0 {
 		text = "直播间本来就是关闭的"
@@ -147,13 +172,23 @@ func (c *changeLiveTitle) CheckAuth(_ int64, senderId int64) bool {
 	return perm.IsWhitelist(senderId)
 }
 
-func (c *changeLiveTitle) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	if len(content) == 0 {
 		groupMsg = message.NewSendingMessage().Append(message.NewText("指令格式如下：\n修改直播标题 新标题"))
 		return
 	}
 	if strutil.Len(content) > 20 {
 		return
+	}
+	if !perm.IsAdmin(msg.Sender.Uin) {
+		val := db.Get([]byte("bilibili_live"))
+		if val != nil {
+			uin, _ := strconv.ParseInt(string(val), 10, 64)
+			if uin != msg.Sender.Uin {
+				groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突修改直播标题"))
+				return
+			}
+		}
 	}
 	ret, err := bilibili.ChangeLiveTitle(content)
 	if err != nil {
