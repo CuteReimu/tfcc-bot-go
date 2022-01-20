@@ -99,7 +99,7 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
 		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
 	}
-	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s",ret.Data.Rtmp.Addr, ret.Data.Rtmp.Code)
+	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", ret.Data.Rtmp.Addr, ret.Data.Rtmp.Code)
 	groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
 	privateMsg = message.NewSendingMessage().Append(message.NewText(privateText))
 	return
