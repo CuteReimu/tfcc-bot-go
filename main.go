@@ -29,7 +29,7 @@ func init() {
 	if err != nil {
 		bot.GenRandomDevice()
 	}
-	utils.WriteLogToFS()
+	utils.WriteLogToFS(utils.LogWithStack)
 	config.Init()
 }
 

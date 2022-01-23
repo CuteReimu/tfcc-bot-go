@@ -50,8 +50,12 @@ github.com/CuteReimu/threp v1.0.0 h1:Ikqs9HQo1nIhqV1rezU4J/T/VO+RIX8nBIUK7z5kaC4
 github.com/CuteReimu/threp v1.0.0/go.mod h1:IlZPzsp/9lbbeH+5Bc8z+gjWGvzb1zo8ZsHSzuTYY30=
 github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e h1:1xhfwRvsh/iRzh6e8DSWjo7uCSdflCp+P4HXDCubhgE=
 github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e/go.mod h1:K/NM/Y7NIt5JOTXLcVpoHbN7YcFarrEslLCWY/gUQ7A=
+github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f h1:iblRLebPvk0i26i1hbCvhai7uHzLaNnq0iuevIbEpjM=
+github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f/go.mod h1:K/NM/Y7NIt5JOTXLcVpoHbN7YcFarrEslLCWY/gUQ7A=
 github.com/Mrs4s/MiraiGo v0.0.0-20220115103726-38bb31b5a666 h1:8HBDifdWT++dG7LdO59j70HOnYOCfeaqvDVSplPfsqY=
 github.com/Mrs4s/MiraiGo v0.0.0-20220115103726-38bb31b5a666/go.mod h1:rtKLkhMEi2YjsrXaNztT4uagUOPBxf6a+TNREkG097I=
+github.com/Mrs4s/MiraiGo v0.0.0-20220117165008-3b461554b747 h1:i9IcyQOVc3eYHXAXgTAMsEdAcGkxpbjBEvVb87z50ZA=
+github.com/Mrs4s/MiraiGo v0.0.0-20220117165008-3b461554b747/go.mod h1:rtKLkhMEi2YjsrXaNztT4uagUOPBxf6a+TNREkG097I=
 github.com/OneOfOne/xxhash v1.2.2 h1:KMrpdQIwFcEqXDklaen+P1axHaj9BSKzvpUUfnHldSE=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
 github.com/RomiChan/protobuf v0.0.0-20211223055824-048df49a8956 h1:hnaAkKz4t+xpSNVp5mnuloRMd3Rj2Lfg5biZ3emv//c=
@@ -59,6 +63,7 @@ github.com/RomiChan/protobuf v0.0.0-20211223055824-048df49a8956/go.mod h1:CKKOWC
 github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de h1:FxWPpzIjnTlhPwqqXc4/vE0f7GvRjuAsbW+HOIe8KnA=
 github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de/go.mod h1:DCaWoUhZrYW9p1lxo/cm8EmUOOzAPSEZNGF2DK1dJgw=
 github.com/armon/consul-api v0.0.0-20180202201655-eb2c6b5be1b6/go.mod h1:grANhF5doyWs3UAsr3K4I6qtAmlQcZDesFNEHPZAzj8=
+github.com/bits-and-blooms/bitset v1.2.1/go.mod h1:gIdJ4wp64HaoK2YrL1Q5/N7Y16edYb8uY+O0FJTyyDA=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/cespare/xxhash v1.1.0 h1:a6HrQnmkObjyL+Gs60czilIUGqrzKutQD6XZog3p+ko=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
@@ -213,6 +218,8 @@ github.com/magiconair/properties v1.8.5/go.mod h1:y3VJvCyxH9uVvJTWEGAELF3aiYNyPK
 github.com/maruel/rs v0.0.0-20150922171536-2c81c4312fe4/go.mod h1:kcRFpEzolcEklV6rD7W95mG49/sbdX/PlFmd7ni3RvA=
 github.com/maruel/rs v1.0.0 h1:NoRR74bfxQy8CzWdkwYb5Rz+H93sl30GSJIvf6ADZZg=
 github.com/maruel/rs v1.0.0/go.mod h1:F3JiIVIlJdcXIW+Ep10ZeiPAwKwSA5IQ6QTpILEE/aM=
+github.com/maruel/rs v1.1.0 h1:dh4OceAF5yD06EASOrb+DS358LI4g0B90YApSdjCP6U=
+github.com/maruel/rs v1.1.0/go.mod h1:vzwMjzSJJxLIXmU62qHj6O5QRn5kvCKxFrfaFCxBcUY=
 github.com/mattn/go-colorable v0.1.12 h1:jF+Du6AlPIjs2BiUiQlKOX0rt3SujHxPnksPKZbaA40=
 github.com/mattn/go-colorable v0.1.12/go.mod h1:u5H1YNBxpqRaxsYJYSkiCWKzEfiAb1Gb520KVy5xxl4=
 github.com/mattn/go-isatty v0.0.14 h1:yVuAays6BHfxijgZPzw+3Zlu5yQgKGP2/hcQbHb7S9Y=
@@ -606,6 +613,8 @@ gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c h1:Hei/4ADfdWqJk1ZMxUNpqntN
 gopkg.in/errgo.v2 v2.1.0/go.mod h1:hNsd1EY+bozCKY1Ytp96fpM3vjJbqLJn88ws8XvfDNI=
 gopkg.in/ini.v1 v1.66.2 h1:XfR1dOYubytKy4Shzc2LHrrGhU0lDCfDGG1yLPmpgsI=
 gopkg.in/ini.v1 v1.66.2/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
+gopkg.in/ini.v1 v1.66.3 h1:jRskFVxYaMGAMUbN0UZ7niA9gzL9B49DOqE78vg0k3w=
+gopkg.in/ini.v1 v1.66.3/go.mod h1:pNLf8WUiyNEtQjuu5G5vTm06TEv9tsIgeAvK8hOrP4k=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.4.0 h1:D8xgwECY7CYvx+Y2n4sBz93Jn9JRvxdiyyo8CTfuKaY=
 gopkg.in/yaml.v2 v2.4.0/go.mod h1:RDklbk79AGWmwhnvt/jBztapEOGDOx6ZbXqjP6csGnQ=
@@ -620,5 +629,7 @@ honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt
 honnef.co/go/tools v0.0.1-2020.1.3/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9vFzvIQ3k=
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
+rsc.io/qr v0.2.0 h1:6vBLea5/NRMVTz8V66gipeLycZMl/+UlFmk8DvqQ6WY=
+rsc.io/qr v0.2.0/go.mod h1:IF+uZjkb9fqyeF/4tlBoynqmQxUoPfWEKh921coOuXs=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=

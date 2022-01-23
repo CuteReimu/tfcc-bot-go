@@ -4,8 +4,8 @@ go 1.17
 
 require (
 	github.com/CuteReimu/threp v1.0.0
-	github.com/Logiase/MiraiGo-Template v0.0.0-20211228141737-6b3a7548aa4e
-	github.com/Mrs4s/MiraiGo v0.0.0-20220115103726-38bb31b5a666
+	github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f
+	github.com/Mrs4s/MiraiGo v0.0.0-20220117165008-3b461554b747
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.2
 	github.com/dlclark/regexp2 v1.4.0
@@ -38,7 +38,7 @@ require (
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible // indirect
 	github.com/lestrrat-go/strftime v1.0.5 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
-	github.com/maruel/rs v1.0.0 // indirect
+	github.com/maruel/rs v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/mitchellh/mapstructure v1.4.3 // indirect
@@ -62,6 +62,7 @@ require (
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/ini.v1 v1.66.2 // indirect
+	gopkg.in/ini.v1 v1.66.3 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
+	rsc.io/qr v0.2.0 // indirect
 )
