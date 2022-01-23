@@ -124,7 +124,7 @@ func (c *checkWhitelist) CheckAuth(int64, int64) bool {
 func (c *checkWhitelist) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	qq, err := strconv.ParseInt(content, 10, 64)
 	if err != nil {
-		groupMsg = message.NewSendingMessage().Append(message.NewText("指令格式如下：\n增加白名单 对方QQ号"))
+		groupMsg = message.NewSendingMessage().Append(message.NewText("指令格式如下：\n查看白名单 对方QQ号"))
 		return
 	}
 	if perm.IsWhitelist(qq) {
