@@ -13,7 +13,7 @@ require (
 	github.com/ozgio/strutil v0.4.0
 	github.com/pkg/errors v0.9.1
 	github.com/spf13/viper v1.10.1
-	github.com/tidwall/gjson v1.13.0
+	github.com/tidwall/gjson v1.14.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
