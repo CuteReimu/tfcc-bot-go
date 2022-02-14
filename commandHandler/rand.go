@@ -3,6 +3,7 @@ package commandHandler
 import (
 	"bufio"
 	"bytes"
+	"embed"
 	"encoding/json"
 	"fmt"
 	"github.com/Logiase/MiraiGo-Template/config"
@@ -10,10 +11,8 @@ import (
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/ozgio/strutil"
 	"io"
-	"io/ioutil"
+	"io/fs"
 	"math/rand"
-	"os"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"sync"
@@ -142,10 +141,12 @@ type randSpell struct {
 	gameMap map[string]*spells
 }
 
+//go:embed spells
+var spellFs embed.FS
+
 func newRandSpell() *randSpell {
 	r := &randSpell{gameMap: make(map[string]*spells)}
-	dir := filepath.Join("assets", "spells")
-	files, err := ioutil.ReadDir(dir)
+	files, err := spellFs.ReadDir("spells")
 	if err != nil {
 		logger.WithError(err).Errorln("init spells failed")
 	}
@@ -153,7 +154,7 @@ func newRandSpell() *randSpell {
 	for _, file := range files {
 		name := file.Name()
 		if strings.HasSuffix(name, ".txt") {
-			err = r.loadSpells(dir, name)
+			err = r.loadSpells("spells/" + name)
 			if err != nil {
 				logger.WithError(err).Errorln("load file failed: " + name)
 			} else {
@@ -165,12 +166,12 @@ func newRandSpell() *randSpell {
 	return r
 }
 
-func (r *randSpell) loadSpells(dir, name string) error {
-	f, err := os.Open(filepath.Join(dir, name))
+func (r *randSpell) loadSpells(name string) error {
+	f, err := spellFs.Open(name)
 	if err != nil {
 		return err
 	}
-	defer func(f *os.File) { _ = f.Close() }(f)
+	defer func(f fs.File) { _ = f.Close() }(f)
 	reader := bufio.NewReader(f)
 	arr := strings.Split(name[:len(name)-len(".txt")], " ")
 	for _, s := range arr {
