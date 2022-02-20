@@ -3,11 +3,11 @@ package videoPusher
 import (
 	"bytes"
 	"fmt"
+	"github.com/CuteReimu/bilibili"
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/go-resty/resty/v2"
@@ -100,7 +100,7 @@ func (m *mh) Stop(_ *bot.Bot, wg *sync.WaitGroup) {
 
 func getNewVideo() *bilibili.Video {
 	mid := config.GlobalConfig.GetInt("bilibili.mid")
-	videoList, err := bilibili.GetUserVideo(mid, bilibili.OrderPubDate, 0, "", 1, 1)
+	videoList, err := bilibili.GetUserVideos(mid, bilibili.OrderPubDate, 0, "", 1, 1)
 	if err != nil {
 		logger.WithError(err).Errorln("获取用户视频失败")
 		return nil

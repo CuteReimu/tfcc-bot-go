@@ -2,19 +2,22 @@ package main
 
 import (
 	"fmt"
+	"github.com/CuteReimu/bilibili"
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/chatPipeline"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repAnalyze"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/videoPusher"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"
 	"os/signal"
+	"strings"
+	"time"
 )
 
 func init() {
@@ -36,7 +39,7 @@ func init() {
 func main() {
 	// 初始化
 	db.Init()
-	bilibili.Init()
+	initBilibili()
 	bot.Init()
 	bot.StartService()
 
@@ -88,4 +91,50 @@ func writeConfig() {
 	} else {
 		fmt.Println("已生成application.yaml，请修改配置后重新启动")
 	}
+}
+
+func initBilibili() {
+	savedCookies := db.Get([]byte("cookies"))
+	if savedCookies != nil {
+		bilibili.SetCookiesString(string(savedCookies))
+		cookies := bilibili.GetCookies()
+		now := time.Now()
+		upToDate := true
+		for _, cookie := range cookies {
+			if now.After(cookie.Expires) {
+				upToDate = false
+				break
+			}
+		}
+		if upToDate {
+			return
+		}
+	}
+	captchaResult, err := bilibili.Captcha()
+	if err != nil {
+		logrus.Fatalf("%+v", err)
+	}
+	if captchaResult.Code != 0 {
+		logrus.Fatalf("登录bilibili获取人机校验失败, code: %d\n", captchaResult.Code)
+	}
+	fmt.Println("gt:", captchaResult.Data.Geetest.Gt)
+	fmt.Println("challenge:", captchaResult.Data.Geetest.Challenge)
+	fmt.Println("请前往以下链接进行人机验证：")
+	fmt.Println("https://kuresaru.github.io/geetest-validator/")
+	fmt.Println("验证后请输入validate：")
+	var line string
+	_, err = fmt.Scanln(&line)
+	if err != nil {
+		logrus.WithError(err).Fatalln("读取stdin失败")
+	}
+	validate := strings.TrimSpace(line)
+	seccode := validate
+	userName := config.GlobalConfig.GetString("bilibili.username")
+	pwd := config.GlobalConfig.GetString("bilibili.password")
+	err = bilibili.LoginWithPassword(userName, pwd, captchaResult, validate, seccode)
+	if err != nil {
+		logrus.Fatalf("%+v", err)
+	}
+	logrus.Infoln("登录bilibili成功")
+	db.Set([]byte("cookies"), []byte(bilibili.GetCookiesString()))
 }
