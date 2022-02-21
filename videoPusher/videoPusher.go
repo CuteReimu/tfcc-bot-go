@@ -105,18 +105,14 @@ func getNewVideo() *bilibili.Video {
 		logger.WithError(err).Errorln("获取用户视频失败")
 		return nil
 	}
-	if videoList.Code != 0 {
-		logger.Errorf("获取用户视频失败，错误码：%d，错误信息：%s\n", videoList.Code, videoList.Message)
-		return nil
-	}
 	var newVideo *bilibili.Video
 	db.Update([]byte("latest_video_id"), func(oldValue []byte) []byte {
 		var latestId string
 		if oldValue != nil {
 			latestId = string(oldValue)
 		}
-		if len(videoList.Data.List.Vlist) > 0 {
-			latestVideo := videoList.Data.List.Vlist[0]
+		if len(videoList.List.Vlist) > 0 {
+			latestVideo := videoList.List.Vlist[0]
 			if latestId != latestVideo.Bvid {
 				newVideo = &latestVideo
 				return []byte(latestVideo.Bvid)

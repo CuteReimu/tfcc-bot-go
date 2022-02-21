@@ -42,15 +42,11 @@ func (g *getLiveState) Execute(_ *message.GroupMessage, content string) (groupMs
 		logger.WithError(err).Errorln("获取直播状态失败")
 		return
 	}
-	if ret.Code != 0 {
-		logger.Errorf("请求直播间状态失败，错误码：%d，错误信息：%s\n", ret.Code, ret.Message)
-		return
-	}
 	var text string
-	if ret.Data.LiveStatus == 0 {
+	if ret.LiveStatus == 0 {
 		text = "直播间状态：未开播"
 	} else {
-		text = fmt.Sprintf("直播间状态：开播\n直播标题：%s\n人气：%d\n直播间地址：%s", ret.Data.Title, ret.Data.Online, getLiveUrl())
+		text = fmt.Sprintf("直播间状态：开播\n直播标题：%s\n人气：%d\n直播间地址：%s", ret.Title, ret.Online, getLiveUrl())
 	}
 	groupMsg = message.NewSendingMessage().Append(message.NewText(text))
 	return
@@ -81,12 +77,8 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 		logger.WithError(err).Errorln("开启直播间失败")
 		return
 	}
-	if ret.Code != 0 {
-		logger.Errorf("开启直播间失败，错误码：%d，错误信息1：%s，错误信息2：%s\n", ret.Code, ret.Message, ret.Msg)
-		return
-	}
 	var publicText string
-	if ret.Data.Change == 0 {
+	if ret.Change == 0 {
 		val := db.Get([]byte("bilibili_live"))
 		if val != nil {
 			uin, _ := strconv.ParseInt(string(val), 10, 64)
@@ -103,7 +95,7 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
 		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 	}
-	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", ret.Data.Rtmp.Addr, ret.Data.Rtmp.Code)
+	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", ret.Rtmp.Addr, ret.Rtmp.Code)
 	groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
 	privateMsg = message.NewSendingMessage().Append(message.NewText(privateText))
 	return
@@ -138,18 +130,14 @@ func (s *stopLive) Execute(msg *message.GroupMessage, content string) (groupMsg 
 		}
 	}
 	rid := config.GlobalConfig.GetInt("bilibili.room_id")
-	ret, err := bilibili.StopLive(rid)
+	changed, err := bilibili.StopLive(rid)
 	if err != nil {
 		logger.WithError(err).Errorln("关闭直播间失败")
 		return
 	}
-	if ret.Code != 0 {
-		logger.Errorf("关闭直播间失败，错误码：%d，错误信息1：%s，错误信息2：%s\n", ret.Code, ret.Message, ret.Msg)
-		return
-	}
 	db.Del([]byte("bilibili_live"))
 	var text string
-	if ret.Data.Change == 0 {
+	if !changed {
 		text = "直播间本来就是关闭的"
 	} else {
 		text = "直播间已关闭"
@@ -191,14 +179,10 @@ func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (gr
 		}
 	}
 	rid := config.GlobalConfig.GetInt("bilibili.room_id")
-	ret, err := bilibili.UpdateLive(rid, content)
+	err := bilibili.UpdateLive(rid, content)
+	var text string
 	if err != nil {
 		logger.WithError(err).Errorln("修改直播间标题失败")
-		return
-	}
-	var text string
-	if ret.Code != 0 {
-		logger.Errorf("修改直播间标题失败，错误码：%d，错误信息1：%s，错误信息2：%s\n", ret.Code, ret.Message, ret.Msg)
 		text = "修改直播间标题失败，请联系管理员"
 	} else {
 		text = "直播间标题已修改为：" + content

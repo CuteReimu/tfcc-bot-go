@@ -37,14 +37,10 @@ func (b *bilibiliVideoAnalysis) Execute(c *client.QQClient, msg *message.GroupMe
 			logger.WithError(err).Errorln("获取视频信息失败")
 			return
 		}
-		if result.Code != 0 {
-			logger.Errorf("获取视频详细信息失败，错误码：%d，错误信息：%s\n", result.Code, result.Message)
-			return
-		}
 		var text string
 		groupMsg = message.NewSendingMessage()
-		if len(result.Data.Pic) > 0 {
-			resp, err := resty.New().SetTimeout(20 * time.Second).SetLogger(logger).R().Get(result.Data.Pic)
+		if len(result.Pic) > 0 {
+			resp, err := resty.New().SetTimeout(20 * time.Second).SetLogger(logger).R().Get(result.Pic)
 			if err != nil {
 				logger.WithError(err).Errorln("获取视频封面失败")
 			} else {
@@ -57,11 +53,11 @@ func (b *bilibiliVideoAnalysis) Execute(c *client.QQClient, msg *message.GroupMe
 				}
 			}
 		}
-		if newStr, err := strutil.Substring(result.Data.Desc, 0, 100); err == nil {
-			result.Data.Desc = newStr + "。。。"
+		if newStr, err := strutil.Substring(result.Desc, 0, 100); err == nil {
+			result.Desc = newStr + "。。。"
 		}
 		groupMsg.Append(message.NewText(fmt.Sprintf(text+"%s\nhttps://www.bilibili.com/video/%s\nUP主：%s\n视频简介：%s",
-			result.Data.Title, result.Data.Bvid, result.Data.Owner.Name, result.Data.Desc)))
+			result.Title, result.Bvid, result.Owner.Name, result.Desc)))
 	}
 	return
 }
