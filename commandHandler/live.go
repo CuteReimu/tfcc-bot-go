@@ -1,8 +1,9 @@
 package commandHandler
 
 import (
+	"github.com/CuteReimu/bilibili"
+	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/ozgio/strutil"
@@ -34,7 +35,8 @@ func (g *getLiveState) Execute(_ *message.GroupMessage, content string) (groupMs
 	if len(content) != 0 {
 		return
 	}
-	ret, err := bilibili.GetLiveStatus()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.GetRoomInfo(rid)
 	if err != nil {
 		logger.WithError(err).Errorln("获取直播状态失败")
 		return
@@ -71,7 +73,9 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 	if len(content) != 0 {
 		return
 	}
-	ret, err := bilibili.StartLive()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	area := config.GlobalConfig.GetInt("bilibili.area_v2")
+	ret, err := bilibili.StartLive(rid, area)
 	if err != nil {
 		logger.WithError(err).Errorln("开启直播间失败")
 		return
@@ -130,7 +134,8 @@ func (s *stopLive) Execute(msg *message.GroupMessage, content string) (groupMsg 
 			}
 		}
 	}
-	ret, err := bilibili.StopLive()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.StopLive(rid)
 	if err != nil {
 		logger.WithError(err).Errorln("关闭直播间失败")
 		return
@@ -182,7 +187,8 @@ func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (gr
 			}
 		}
 	}
-	ret, err := bilibili.ChangeLiveTitle(content)
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.UpdateLive(rid, content)
 	if err != nil {
 		logger.WithError(err).Errorln("修改直播间标题失败")
 		return
