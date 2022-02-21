@@ -3,23 +3,23 @@ module github.com/Touhou-Freshman-Camp/tfcc-bot-go
 go 1.17
 
 require (
+	github.com/CuteReimu/bilibili v0.0.0-20220221092434-a25b8c180be0
 	github.com/CuteReimu/threp v1.0.0
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f
-	github.com/Mrs4s/MiraiGo v0.0.0-20220218101355-bd6f8947ef79
+	github.com/Mrs4s/MiraiGo v0.0.0-20220220162245-9ef6c3cf3a03
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.2
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ozgio/strutil v0.4.0
 	github.com/pkg/errors v0.9.1
+	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/viper v1.10.1
-	github.com/tidwall/gjson v1.14.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
 
 require (
 	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f // indirect
-	github.com/CuteReimu/bilibili v0.0.0-20220220094451-c5c5d73b2fa2 // indirect
 	github.com/RomiChan/protobuf v0.0.0-20220213164748-44b69c8bdec0 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -46,13 +46,13 @@ require (
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/pierrec/lz4/v4 v4.1.14 // indirect
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/spf13/afero v1.8.1 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.2.0 // indirect
+	github.com/tidwall/gjson v1.14.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tuotoo/qrcode v0.0.0-20190222102259-ac9c44189bf2 // indirect
