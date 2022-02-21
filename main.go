@@ -100,11 +100,8 @@ func initBilibili() {
 	if err != nil {
 		logrus.Fatalf("%+v", err)
 	}
-	if captchaResult.Code != 0 {
-		logrus.Fatalf("登录bilibili获取人机校验失败, code: %d\n", captchaResult.Code)
-	}
-	fmt.Println("gt:", captchaResult.Data.Geetest.Gt)
-	fmt.Println("challenge:", captchaResult.Data.Geetest.Challenge)
+	fmt.Println("gt:", captchaResult.Geetest.Gt)
+	fmt.Println("challenge:", captchaResult.Geetest.Challenge)
 	fmt.Println("请前往以下链接进行人机验证：")
 	fmt.Println("https://kuresaru.github.io/geetest-validator/")
 	fmt.Println("验证后请输入validate：")
