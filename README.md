@@ -61,7 +61,6 @@ qq:
 
 ## 模块
 
-- bilibili 和B站相关的代码
 - chatPipeline 非命令式的QQ聊天消息处理。想要新增，实现`pipelineHandler`接口并在`init()`中调用`register()`即可
 - commandHandler QQ聊天中输入的命令。想要新增命令，实现`cmdHandler`接口并在`init()`中调用`register()`即可
 - db 一个嵌入式Key-Value型数据库，使用这个模块存储的数据会被存在硬盘里，下次重启后仍然保留
@@ -109,3 +108,4 @@ qq:
 - github.com/dlclark/regexp2 完整版的正则表达式库
 - github.com/pkg/errors 可以将golang本身的error包装的库
 - github.com/CuteReimu/threp 一个东方replay文件的解析库
+- github.com/CuteReimu/bilibili 一个B站API的golang版sdk
