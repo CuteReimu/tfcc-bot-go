@@ -3,9 +3,9 @@ package chatPipeline
 import (
 	"bytes"
 	"fmt"
+	"github.com/CuteReimu/bilibili"
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	regexp "github.com/dlclark/regexp2"
 	"github.com/go-resty/resty/v2"
 	"github.com/ozgio/strutil"
@@ -68,7 +68,7 @@ func (b *bilibiliVideoAnalysis) Execute(c *client.QQClient, msg *message.GroupMe
 
 func (b *bilibiliVideoAnalysis) getVideoInfo(content string) (*bilibili.VideoInfo, bool, error) {
 	if avRes, _ := b.avReg.FindStringMatch(content); avRes != nil {
-		avid, err := strconv.ParseUint(avRes.GroupByNumber(1).String(), 10, 32)
+		avid, err := strconv.Atoi(avRes.GroupByNumber(1).String())
 		if err != nil {
 			return nil, true, errors.Wrap(err, "解析avid失败："+avRes.GroupByNumber(1).String())
 		}

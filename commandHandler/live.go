@@ -2,8 +2,9 @@ package commandHandler
 
 import (
 	"fmt"
+	"github.com/CuteReimu/bilibili"
+	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/bilibili"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/ozgio/strutil"
@@ -35,7 +36,8 @@ func (g *getLiveState) Execute(_ *message.GroupMessage, content string) (groupMs
 	if len(content) != 0 {
 		return
 	}
-	ret, err := bilibili.GetLiveStatus()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.GetRoomInfo(rid)
 	if err != nil {
 		logger.WithError(err).Errorln("获取直播状态失败")
 		return
@@ -48,7 +50,7 @@ func (g *getLiveState) Execute(_ *message.GroupMessage, content string) (groupMs
 	if ret.Data.LiveStatus == 0 {
 		text = "直播间状态：未开播"
 	} else {
-		text = fmt.Sprintf("直播间状态：开播\n直播标题：%s\n人气：%d\n直播间地址：%s", ret.Data.Title, ret.Data.Online, bilibili.GetLiveUrl())
+		text = fmt.Sprintf("直播间状态：开播\n直播标题：%s\n人气：%d\n直播间地址：%s", ret.Data.Title, ret.Data.Online, getLiveUrl())
 	}
 	groupMsg = message.NewSendingMessage().Append(message.NewText(text))
 	return
@@ -72,7 +74,9 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 	if len(content) != 0 {
 		return
 	}
-	ret, err := bilibili.StartLive()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	area := config.GlobalConfig.GetInt("bilibili.area_v2")
+	ret, err := bilibili.StartLive(rid, area)
 	if err != nil {
 		logger.WithError(err).Errorln("开启直播间失败")
 		return
@@ -87,17 +91,17 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 		if val != nil {
 			uin, _ := strconv.ParseInt(string(val), 10, 64)
 			if uin != msg.Sender.Uin {
-				publicText = fmt.Sprintf("已经有人正在直播了\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
+				publicText = fmt.Sprintf("已经有人正在直播了\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 				groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
 				return
 			}
 		} else {
 			db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
 		}
-		publicText = fmt.Sprintf("直播间本来就是开启的，推流码已私聊\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
+		publicText = fmt.Sprintf("直播间本来就是开启的，推流码已私聊\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 	} else {
 		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
-		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", bilibili.GetLiveUrl())
+		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 	}
 	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", ret.Data.Rtmp.Addr, ret.Data.Rtmp.Code)
 	groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
@@ -133,7 +137,8 @@ func (s *stopLive) Execute(msg *message.GroupMessage, content string) (groupMsg 
 			}
 		}
 	}
-	ret, err := bilibili.StopLive()
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.StopLive(rid)
 	if err != nil {
 		logger.WithError(err).Errorln("关闭直播间失败")
 		return
@@ -185,7 +190,8 @@ func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (gr
 			}
 		}
 	}
-	ret, err := bilibili.ChangeLiveTitle(content)
+	rid := config.GlobalConfig.GetInt("bilibili.room_id")
+	ret, err := bilibili.UpdateLive(rid, content)
 	if err != nil {
 		logger.WithError(err).Errorln("修改直播间标题失败")
 		return
@@ -199,4 +205,8 @@ func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (gr
 	}
 	groupMsg = message.NewSendingMessage().Append(message.NewText(text))
 	return
+}
+
+func getLiveUrl() string {
+	return "https://live.bilibili.com/" + config.GlobalConfig.GetString("bilibili.room_id")
 }
