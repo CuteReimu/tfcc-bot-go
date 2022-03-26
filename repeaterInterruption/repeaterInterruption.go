@@ -57,7 +57,7 @@ func (m *mh) PostInit() {
 }
 
 func (m *mh) Serve(b *bot.Bot) {
-	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+	b.GroupMessageEvent.Subscribe(func(c *client.QQClient, msg *message.GroupMessage) {
 		data, ok := m.data[msg.GroupCode]
 		if !ok {
 			return
