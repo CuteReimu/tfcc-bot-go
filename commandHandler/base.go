@@ -52,7 +52,7 @@ func (m *mh) PostInit() {
 }
 
 func (m *mh) Serve(b *bot.Bot) {
-	b.OnGroupMessage(func(c *client.QQClient, msg *message.GroupMessage) {
+	b.GroupMessageEvent.Subscribe(func(c *client.QQClient, msg *message.GroupMessage) {
 		var isAt bool
 		elem := msg.Elements
 		if len(elem) > 0 {
