@@ -42,3 +42,14 @@ func AddWhitelist(qq int64) {
 func DelWhitelist(qq int64) {
 	db.Del([]byte(whitelistPrefix + strconv.FormatInt(qq, 10)))
 }
+
+// ListWhitelist 因为这个接口一般用来展示，所以返回[]string
+func ListWhitelist() (list []string) {
+	db.PrefixScanKey([]byte(whitelistPrefix), func(key []byte) error {
+		if len(key) > len(whitelistPrefix) {
+			list = append(list, string(key)[len(whitelistPrefix):])
+		}
+		return nil
+	})
+	return
+}

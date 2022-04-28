@@ -10,6 +10,7 @@ import (
 func init() {
 	register(&delWhitelist{})
 	register(&addWhitelist{})
+	register(&listAllWhitelist{})
 	register(&checkWhitelist{})
 }
 
@@ -104,6 +105,31 @@ func (a *addWhitelist) Execute(_ *message.GroupMessage, content string) (groupMs
 		ret += "：" + strconv.FormatInt(qqNumbers[0], 10)
 	}
 	groupMsg = message.NewSendingMessage().Append(message.NewText(ret))
+	return
+}
+
+type listAllWhitelist struct{}
+
+func (g *listAllWhitelist) Name() string {
+	return "列出所有白名单"
+}
+
+func (g *listAllWhitelist) ShowTips(int64, int64) string {
+	return "列出所有白名单"
+}
+
+func (g *listAllWhitelist) CheckAuth(_ int64, senderId int64) bool {
+	return perm.IsAdmin(senderId)
+}
+
+func (g *listAllWhitelist) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+	if len(content) != 0 {
+		return
+	}
+	list := perm.ListWhitelist()
+	if len(list) > 0 {
+		groupMsg = message.NewSendingMessage().Append(message.NewText("白名单列表：\n" + strings.Join(list, "\n")))
+	}
 	return
 }
 
