@@ -50,14 +50,18 @@ func Get(key []byte) (value []byte) {
 	return
 }
 
-func PrefixScanKey(prefix []byte, f func(key []byte) error) {
+func PrefixScanKeyValue(prefix []byte, f func(key, value []byte) error) {
 	err := DB.View(func(txn *badger.Txn) error {
 		it := txn.NewIterator(badger.IteratorOptions{PrefetchSize: 100})
 		defer it.Close()
 		for it.Seek(prefix); it.ValidForPrefix(prefix); it.Next() {
 			item := it.Item()
 			k := item.Key()
-			err := f(k)
+			v, err := item.ValueCopy(nil)
+			if err != nil {
+				return err
+			}
+			err = f(k, v)
 			if err != nil {
 				return err
 			}
@@ -66,5 +70,28 @@ func PrefixScanKey(prefix []byte, f func(key []byte) error) {
 	})
 	if err != nil {
 		logger.WithError(err).Errorln("prefix scan failed")
+	}
+}
+
+func PrefixUpdateKey(prefix []byte, f func(key []byte) ([]byte, error)) {
+	err := DB.Update(func(txn *badger.Txn) error {
+		it := txn.NewIterator(badger.DefaultIteratorOptions)
+		defer it.Close()
+		for it.Seek(prefix); it.ValidForPrefix(prefix); it.Next() {
+			item := it.Item()
+			k := item.Key()
+			v, err := f(k)
+			if err != nil {
+				return err
+			}
+			err = txn.Set(k, v)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		logger.WithError(err).Errorln("prefix delete key failed")
 	}
 }

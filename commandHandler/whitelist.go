@@ -1,6 +1,7 @@
 package commandHandler
 
 import (
+	"fmt"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"strconv"
@@ -12,6 +13,8 @@ func init() {
 	register(&addWhitelist{})
 	register(&listAllWhitelist{})
 	register(&checkWhitelist{})
+	register(&enableAllWhitelist{})
+	register(&disableAllWhitelist{})
 }
 
 type delWhitelist struct{}
@@ -135,19 +138,19 @@ func (g *listAllWhitelist) Execute(_ *message.GroupMessage, content string) (gro
 
 type checkWhitelist struct{}
 
-func (c *checkWhitelist) Name() string {
+func (e *checkWhitelist) Name() string {
 	return "查看白名单"
 }
 
-func (c *checkWhitelist) ShowTips(int64, int64) string {
+func (e *checkWhitelist) ShowTips(int64, int64) string {
 	return "查看白名单 对方QQ号"
 }
 
-func (c *checkWhitelist) CheckAuth(int64, int64) bool {
+func (e *checkWhitelist) CheckAuth(int64, int64) bool {
 	return true
 }
 
-func (c *checkWhitelist) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+func (e *checkWhitelist) Execute(_ *message.GroupMessage, content string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
 	qq, err := strconv.ParseInt(content, 10, 64)
 	if err != nil {
 		groupMsg = message.NewSendingMessage().Append(message.NewText("指令格式如下：\n查看白名单 对方QQ号"))
@@ -158,5 +161,45 @@ func (c *checkWhitelist) Execute(_ *message.GroupMessage, content string) (group
 	} else {
 		groupMsg = message.NewSendingMessage().Append(message.NewText(content + "不是白名单"))
 	}
+	return
+}
+
+type enableAllWhitelist struct{}
+
+func (e *enableAllWhitelist) Name() string {
+	return "启用所有白名单"
+}
+
+func (e *enableAllWhitelist) ShowTips(int64, int64) string {
+	return "启用所有白名单"
+}
+
+func (e *enableAllWhitelist) CheckAuth(_ int64, senderId int64) bool {
+	return perm.IsSuperAdmin(senderId)
+}
+
+func (e *enableAllWhitelist) Execute(*message.GroupMessage, string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+	count := perm.EnableAllWhitelist()
+	groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("已启用%d个白名单", count)))
+	return
+}
+
+type disableAllWhitelist struct{}
+
+func (d *disableAllWhitelist) Name() string {
+	return "禁用所有白名单"
+}
+
+func (d *disableAllWhitelist) ShowTips(int64, int64) string {
+	return "禁用所有白名单"
+}
+
+func (d *disableAllWhitelist) CheckAuth(_ int64, senderId int64) bool {
+	return perm.IsSuperAdmin(senderId)
+}
+
+func (d *disableAllWhitelist) Execute(*message.GroupMessage, string) (groupMsg *message.SendingMessage, privateMsg *message.SendingMessage) {
+	count := perm.DisableAllWhitelist()
+	groupMsg = message.NewSendingMessage().Append(message.NewText(fmt.Sprintf("已禁用%d个白名单", count)))
 	return
 }
