@@ -31,7 +31,7 @@ func DelAdmin(qq int64) {
 // ListAdmin 因为这个接口一般用来展示，所以返回[]string
 func ListAdmin() (list []string) {
 	list = append(list, strconv.FormatInt(config.GlobalConfig.GetInt64("qq.super_admin_qq"), 10))
-	db.PrefixScanKey([]byte(adminPrefix), func(key []byte) error {
+	db.PrefixScanKeyValue([]byte(adminPrefix), func(key, value []byte) error {
 		if len(key) > len(adminPrefix) {
 			list = append(list, string(key)[len(adminPrefix):])
 		}
@@ -44,7 +44,7 @@ const whitelistPrefix = "whitelist:"
 
 func IsWhitelist(qq int64) bool {
 	buf := db.Get([]byte(whitelistPrefix + strconv.FormatInt(qq, 10)))
-	return buf != nil
+	return buf != nil && string(buf) == "1"
 }
 
 func AddWhitelist(qq int64) {
@@ -55,10 +55,26 @@ func DelWhitelist(qq int64) {
 	db.Del([]byte(whitelistPrefix + strconv.FormatInt(qq, 10)))
 }
 
+func DisableAllWhitelist() (count int) {
+	db.PrefixUpdateKey([]byte(whitelistPrefix), func([]byte) ([]byte, error) {
+		count++
+		return []byte{'0'}, nil
+	})
+	return
+}
+
+func EnableAllWhitelist() (count int) {
+	db.PrefixUpdateKey([]byte(whitelistPrefix), func([]byte) ([]byte, error) {
+		count++
+		return []byte{'1'}, nil
+	})
+	return
+}
+
 // ListWhitelist 因为这个接口一般用来展示，所以返回[]string
 func ListWhitelist() (list []string) {
-	db.PrefixScanKey([]byte(whitelistPrefix), func(key []byte) error {
-		if len(key) > len(whitelistPrefix) {
+	db.PrefixScanKeyValue([]byte(whitelistPrefix), func(key, val []byte) error {
+		if len(key) > len(whitelistPrefix) && val != nil && string(val) == "1" {
 			list = append(list, string(key)[len(whitelistPrefix):])
 		}
 		return nil
