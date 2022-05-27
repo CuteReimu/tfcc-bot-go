@@ -64,7 +64,7 @@ func (m *mh) Serve(b *bot.Bot) {
 						if err != nil {
 							logger.WithError(err).Errorln("获取视频封面失败")
 						} else {
-							elem, err := b.UploadGroupImage(groupCode, bytes.NewReader(resp.Body()))
+							elem, err := b.UploadImage(message.Source{SourceType: message.SourceGroup, PrimaryID: groupCode}, bytes.NewReader(resp.Body()))
 							if err != nil {
 								logger.WithError(err).Errorln("上传封面失败")
 							} else {

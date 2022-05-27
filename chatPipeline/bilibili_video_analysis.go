@@ -44,7 +44,7 @@ func (b *bilibiliVideoAnalysis) Execute(c *client.QQClient, msg *message.GroupMe
 			if err != nil {
 				logger.WithError(err).Errorln("获取视频封面失败")
 			} else {
-				elem, err := c.UploadGroupImage(msg.GroupCode, bytes.NewReader(resp.Body()))
+				elem, err := c.UploadImage(message.Source{SourceType: message.SourceGroup, PrimaryID: msg.GroupCode}, bytes.NewReader(resp.Body()))
 				if err != nil {
 					logger.WithError(err).Errorln("上传封面失败")
 				} else {
