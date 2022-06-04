@@ -46,6 +46,7 @@ func main() {
 
 	// 登录
 	if err := bot.Login(); err != nil {
+		logrus.Errorf("%+v", err)
 		bot.Stop()
 		db.Stop()
 		return
@@ -64,6 +65,7 @@ func main() {
 
 func writeConfig() {
 	config.GlobalConfig = &config.Config{Viper: viper.New()}
+	config.GlobalConfig.Set("bot.loginmethod", "qrcode")
 	config.GlobalConfig.Set("bot.account", int64(0))
 	config.GlobalConfig.Set("bot.password", "")
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
