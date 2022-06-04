@@ -52,6 +52,8 @@ github.com/CuteReimu/bilibili v0.0.0-20220426192211-b93b61bc8f2c h1:ucEuNs/PKEO7
 github.com/CuteReimu/bilibili v0.0.0-20220426192211-b93b61bc8f2c/go.mod h1:54u70RUhNqsY+AE5GHIb4/0BpwGR3aZMuGWbG4wAPG8=
 github.com/CuteReimu/bilibili v0.0.0-20220604144315-85d369181632 h1:V64jTXvIIMWgnhhDyCF7b8N3bxzrxOHmNu8y3GnZZIo=
 github.com/CuteReimu/bilibili v0.0.0-20220604144315-85d369181632/go.mod h1:54u70RUhNqsY+AE5GHIb4/0BpwGR3aZMuGWbG4wAPG8=
+github.com/CuteReimu/bilibili v0.0.0-20220604145707-bbb323f3b371 h1:pLJP9TtxL5jlZR9nH6aK8kL+hxB1u5JIoZzSoIiQHQk=
+github.com/CuteReimu/bilibili v0.0.0-20220604145707-bbb323f3b371/go.mod h1:54u70RUhNqsY+AE5GHIb4/0BpwGR3aZMuGWbG4wAPG8=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f h1:iblRLebPvk0i26i1hbCvhai7uHzLaNnq0iuevIbEpjM=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220123091600-d39903fd2c9f/go.mod h1:K/NM/Y7NIt5JOTXLcVpoHbN7YcFarrEslLCWY/gUQ7A=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8 h1:0LF49i0DoeUMhyeWQalAulNcKYI3agegsgi4W/tjyyo=

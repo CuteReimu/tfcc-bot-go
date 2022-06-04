@@ -3,7 +3,7 @@ module github.com/Touhou-Freshman-Camp/tfcc-bot-go
 go 1.18
 
 require (
-	github.com/CuteReimu/bilibili v0.0.0-20220604144315-85d369181632
+	github.com/CuteReimu/bilibili v0.0.0-20220604145707-bbb323f3b371
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8
 	github.com/Mrs4s/MiraiGo v0.0.0-20220524053130-007f228e1092
 	github.com/dgraph-io/badger/v3 v3.2103.2
