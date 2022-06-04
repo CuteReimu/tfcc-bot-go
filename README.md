@@ -51,8 +51,9 @@ bilibili:
   room_id: "12345678"      # B站直播间房间号
   username: "13888888888"  # B站用户名
 bot:
-  account: 0    # 机器人QQ号
-  password: ""  # 机器人密码（不填就是扫码登录）
+  loginmethod: qrcode  # 登录方式
+  account: 0           # 机器人QQ号
+  password: ""         # 机器人密码
 qq:
   rand_count: 10            # 每天随符卡限制次数
   rand_one_time_limit: 20   # 单次随符卡的数量限制
