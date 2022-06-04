@@ -51,6 +51,7 @@ func main() {
 	// 登录
 	if err := bot.Login(); err != nil {
 		bot.Stop()
+		db.Stop()
 		return
 	}
 
