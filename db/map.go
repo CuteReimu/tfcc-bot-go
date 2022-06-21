@@ -17,7 +17,7 @@ func Set(key, value []byte, ttl ...time.Duration) {
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("set key value failed: {%s, %s}\n", string(key), string(value))
+		logger.WithError(err).Errorf("set key value failed: {%s, %s}", string(key), string(value))
 	}
 }
 
@@ -28,7 +28,7 @@ func Del(key []byte) {
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("delete key failed: %s\n", string(key))
+		logger.WithError(err).Errorf("delete key failed: %s", string(key))
 	}
 }
 
@@ -45,7 +45,7 @@ func Get(key []byte) (value []byte) {
 		return err
 	})
 	if err != nil {
-		logger.WithError(err).Errorf("get failed, key: %s\n", string(key))
+		logger.WithError(err).Errorf("get failed, key: %s", string(key))
 	}
 	return
 }
@@ -69,7 +69,7 @@ func PrefixScanKeyValue(prefix []byte, f func(key, value []byte) error) {
 		return nil
 	})
 	if err != nil {
-		logger.WithError(err).Errorln("prefix scan failed")
+		logger.WithError(err).Error("prefix scan failed")
 	}
 }
 
@@ -92,6 +92,6 @@ func PrefixUpdateKey(prefix []byte, f func(key []byte) ([]byte, error)) {
 		return nil
 	})
 	if err != nil {
-		logger.WithError(err).Errorln("prefix delete key failed")
+		logger.WithError(err).Error("prefix delete key failed")
 	}
 }
