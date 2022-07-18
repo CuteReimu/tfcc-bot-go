@@ -12,7 +12,6 @@ import (
 	"github.com/spf13/viper"
 	"os"
 	"os/signal"
-	"strings"
 	"time"
 )
 
@@ -99,26 +98,16 @@ func initBilibili() {
 			return
 		}
 	}
-	captchaResult, err := bilibili.Captcha()
+	qrCode, err := bilibili.GetQRCode()
 	if err != nil {
-		logrus.Fatalf("%+v", err)
+		logrus.Fatalf("%+v", qrCode)
+		return
 	}
-	fmt.Println("gt:", captchaResult.Geetest.Gt)
-	fmt.Println("challenge:", captchaResult.Geetest.Challenge)
-	fmt.Println("请前往以下链接进行人机验证：")
-	fmt.Println("https://kuresaru.github.io/geetest-validator/")
-	fmt.Println("验证后请输入validate：")
+	qrCode.Print()
+	fmt.Println("请扫码后按回车")
 	var line string
-	_, err = fmt.Scanln(&line)
-	if err != nil {
-		logrus.WithError(err).Fatalln("读取stdin失败")
-	}
-	validate := strings.TrimSpace(line)
-	seccode := validate
-	userName := config.GlobalConfig.GetString("bilibili.username")
-	pwd := config.GlobalConfig.GetString("bilibili.password")
-	err = bilibili.LoginWithPassword(userName, pwd, captchaResult, validate, seccode)
-	if err != nil {
+	_, _ = fmt.Scanln(&line)
+	if err = bilibili.LoginWithQRCode(qrCode); err != nil {
 		logrus.Fatalf("%+v", err)
 	}
 	logrus.Infoln("登录bilibili成功")
