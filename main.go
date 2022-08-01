@@ -114,11 +114,11 @@ func initBilibili() {
 	}
 	qrCode, err := bilibili.GetQRCode()
 	if err != nil {
-		logrus.Fatalf("%+v", qrCode)
+		logrus.Fatalf("%+v", err)
 		return
 	}
 	qrCode.Print()
-	fmt.Println("请扫码后按回车")
+	fmt.Println("B站登录过期，请扫码登录B站后按回车")
 	var line string
 	_, _ = fmt.Scanln(&line)
 	if err = bilibili.LoginWithQRCode(qrCode); err != nil {
