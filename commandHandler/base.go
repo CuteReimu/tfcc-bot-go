@@ -1,6 +1,7 @@
 package commandHandler
 
 import (
+	"github.com/Logiase/MiraiGo-Template/config"
 	"strings"
 	"sync"
 
@@ -53,6 +54,9 @@ func (m *mh) PostInit() {
 
 func (m *mh) Serve(b *bot.Bot) {
 	b.GroupMessageEvent.Subscribe(func(c *client.QQClient, msg *message.GroupMessage) {
+		if !isConfigQQGroup(msg.GroupCode) {
+			return
+		}
 		var isAt bool
 		elem := msg.Elements
 		if len(elem) > 0 {
@@ -130,4 +134,13 @@ func tips(c *client.QQClient, msg *message.GroupMessage) {
 		}
 	}
 	c.SendGroupMessage(msg.GroupCode, message.NewSendingMessage().Append(message.NewText("你可以使用以下功能：\n"+strings.Join(ret, "\n"))))
+}
+
+func isConfigQQGroup(groupCode int64) bool {
+	for _, qqGroup := range config.GlobalConfig.GetIntSlice("schedule.qq_group") {
+		if int64(qqGroup) == groupCode {
+			return true
+		}
+	}
+	return false
 }

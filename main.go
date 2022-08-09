@@ -68,6 +68,7 @@ func writeConfig() {
 	config.GlobalConfig.Set("bot.account", int64(0))
 	config.GlobalConfig.Set("bot.password", "")
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
+	config.GlobalConfig.Set("qq.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("bilibili.username", "13888888888")
 	config.GlobalConfig.Set("bilibili.password", "12345678")
 	config.GlobalConfig.Set("bilibili.mid", "12345678")
@@ -100,11 +101,11 @@ func initBilibili() {
 	}
 	qrCode, err := bilibili.GetQRCode()
 	if err != nil {
-		logrus.Fatalf("%+v", err)
+		logrus.Fatalf("%+v", qrCode)
 		return
 	}
 	qrCode.Print()
-	fmt.Println("B站登录过期，请扫码登录B站后按回车")
+	fmt.Println("请扫码后按回车")
 	var line string
 	_, _ = fmt.Scanln(&line)
 	if err = bilibili.LoginWithQRCode(qrCode); err != nil {

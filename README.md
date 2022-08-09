@@ -56,6 +56,8 @@ bot:
   password: ""         # 机器人密码
 qq:
   super_admin_qq: 12345678  # 主管理员QQ号
+  qq_group: # 主要功能的QQ群
+    - 12345678
 ```
 
 修改配置文件后重新启动即可。
