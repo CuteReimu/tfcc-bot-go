@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e
+	github.com/CuteReimu/dets v0.0.0-20220809164358-7c1b0dd02e2b
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8
 	github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de
 	github.com/dgraph-io/badger/v3 v3.2103.2
