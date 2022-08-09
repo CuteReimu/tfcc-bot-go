@@ -3,12 +3,12 @@ package commandHandler
 import (
 	"fmt"
 	"github.com/CuteReimu/bilibili"
+	"github.com/CuteReimu/dets"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/ozgio/strutil"
-	"strconv"
 )
 
 func init() {
@@ -79,20 +79,19 @@ func (s *startLive) Execute(msg *message.GroupMessage, content string) (groupMsg
 	}
 	var publicText string
 	if ret.Change == 0 {
-		val := db.Get([]byte("bilibili_live"))
-		if val != nil {
-			uin, _ := strconv.ParseInt(string(val), 10, 64)
+		uin := dets.GetInt64([]byte("bilibili_live"))
+		if uin != 0 {
 			if uin != msg.Sender.Uin {
 				publicText = fmt.Sprintf("已经有人正在直播了\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 				groupMsg = message.NewSendingMessage().Append(message.NewText(publicText))
 				return
 			}
 		} else {
-			db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
+			dets.Put([]byte("bilibili_live"), msg.Sender.Uin)
 		}
 		publicText = fmt.Sprintf("直播间本来就是开启的，推流码已私聊\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 	} else {
-		db.Set([]byte("bilibili_live"), []byte(strconv.FormatInt(msg.Sender.Uin, 10)))
+		dets.Put([]byte("bilibili_live"), msg.Sender.Uin)
 		publicText = fmt.Sprintf("直播间已开启，推流码已私聊，别忘了修改直播间标题哦！\n直播间地址：%s\n快来围观吧！", getLiveUrl())
 	}
 	privateText := fmt.Sprintf("RTMP推流地址：%s\n密钥：%s", ret.Rtmp.Addr, ret.Rtmp.Code)
@@ -120,13 +119,10 @@ func (s *stopLive) Execute(msg *message.GroupMessage, content string) (groupMsg 
 		return
 	}
 	if !perm.IsAdmin(msg.Sender.Uin) {
-		val := db.Get([]byte("bilibili_live"))
-		if val != nil {
-			uin, _ := strconv.ParseInt(string(val), 10, 64)
-			if uin != msg.Sender.Uin {
-				groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突关闭直播"))
-				return
-			}
+		uin := dets.GetInt64([]byte("bilibili_live"))
+		if uin != 0 && uin != msg.Sender.Uin {
+			groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突关闭直播"))
+			return
 		}
 	}
 	rid := config.GlobalConfig.GetInt("bilibili.room_id")
@@ -169,13 +165,10 @@ func (c *changeLiveTitle) Execute(msg *message.GroupMessage, content string) (gr
 		return
 	}
 	if !perm.IsAdmin(msg.Sender.Uin) {
-		val := db.Get([]byte("bilibili_live"))
-		if val != nil {
-			uin, _ := strconv.ParseInt(string(val), 10, 64)
-			if uin != msg.Sender.Uin {
-				groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突修改直播标题"))
-				return
-			}
+		uin := dets.GetInt64([]byte("bilibili_live"))
+		if uin != 0 && uin != msg.Sender.Uin {
+			groupMsg = message.NewSendingMessage().Append(message.NewText("谢绝唐突修改直播标题"))
+			return
 		}
 	}
 	rid := config.GlobalConfig.GetInt("bilibili.room_id")

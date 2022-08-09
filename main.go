@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/CuteReimu/bilibili"
+	"github.com/CuteReimu/dets"
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
@@ -97,9 +98,9 @@ func writeConfig() {
 }
 
 func initBilibili() {
-	savedCookies := db.Get([]byte("cookies"))
-	if savedCookies != nil {
-		bilibili.SetCookiesString(string(savedCookies))
+	savedCookies := dets.GetString([]byte("cookies"))
+	if len(savedCookies) > 0 {
+		bilibili.SetCookiesString(savedCookies)
 		cookies := bilibili.GetCookies()
 		now := time.Now()
 		upToDate := true
@@ -126,5 +127,5 @@ func initBilibili() {
 		logrus.Fatalf("%+v", err)
 	}
 	logrus.Infoln("登录bilibili成功")
-	db.Set([]byte("cookies"), []byte(bilibili.GetCookiesString()))
+	dets.Put([]byte("cookies"), bilibili.GetCookiesString())
 }
