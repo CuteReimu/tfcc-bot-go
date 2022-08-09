@@ -42,6 +42,8 @@ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e h1:z3v4EQQKVt9UjIcixd8CWV/oBI6g9fpTjEKgSrC984M=
 github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e/go.mod h1:PiX6uE+hsRxe3AeWL2RaGgQrIaIHqrmS1HvgB1QoZbM=
+github.com/CuteReimu/dets v0.0.0-20220809164358-7c1b0dd02e2b h1:DrMMq+FLwHloxvVG4S6FQVB9KikLPA683EWodPpQvZk=
+github.com/CuteReimu/dets v0.0.0-20220809164358-7c1b0dd02e2b/go.mod h1:xc4kXabZ5BMMcP++QWycgNRHO27ChnKUjg/XPHBCkM8=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8 h1:0LF49i0DoeUMhyeWQalAulNcKYI3agegsgi4W/tjyyo=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8/go.mod h1:K/NM/Y7NIt5JOTXLcVpoHbN7YcFarrEslLCWY/gUQ7A=
 github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de h1:cCEsQlZsem2DJlvtWI+CNI+lyz9zRuioBQFuBO94/MU=

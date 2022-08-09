@@ -1,6 +1,7 @@
 package db
 
 import (
+	"github.com/CuteReimu/dets"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/dgraph-io/badger/v3"
 	"time"
@@ -16,6 +17,7 @@ func Init() {
 	if err != nil {
 		logger.WithError(err).Fatal("init database failed")
 	}
+	dets.SetDB(DB)
 	go gc()
 }
 
