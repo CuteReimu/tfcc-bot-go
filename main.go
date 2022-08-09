@@ -8,6 +8,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
+	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"
