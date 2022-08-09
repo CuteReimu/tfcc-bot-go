@@ -75,6 +75,7 @@ func writeConfig() {
 	config.GlobalConfig.Set("qq.rand_one_time_limit", 2)
 	config.GlobalConfig.Set("qq.related_url", "")
 	config.GlobalConfig.Set("qq.super_admin_qq", int64(12345678))
+	config.GlobalConfig.Set("qq.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
 	config.GlobalConfig.Set("schedule.before", []int64{3 * 3600, 6 * 3600})
 	config.GlobalConfig.Set("schedule.video_push_delay", int64(600))

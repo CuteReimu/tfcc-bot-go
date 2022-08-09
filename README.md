@@ -59,16 +59,18 @@ qq:
   rand_one_time_limit: 20   # 单次随符卡的数量限制
   related_url: ""           # 关联的网站网址
   super_admin_qq: 12345678  # 主管理员QQ号
+  qq_group: # 主要功能的QQ群
+    - 12345678
 repeater_interruption:
   allowance: 5  # 打断复读功能限制的复读次数
   cool_down: 3  # 打断复读冷却时间（秒）
-  qq_group:     # 打断复读的Q群
-  - 12345678
+  qq_group: # 打断复读的Q群
+    - 12345678
 schedule:
-  before:    # 预约功能提前提醒时间（秒）
-  - 10800
-  - 21600
-  qq_group:  # 预约功能提醒QQ群
+  before: # 预约功能提前提醒时间（秒）
+    - 10800
+    - 21600
+  qq_group: # 预约功能提醒QQ群
   - 12345678
   video_push_delay: 600  # 视频推送间隔
 thwiki:
