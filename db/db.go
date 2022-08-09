@@ -17,7 +17,7 @@ func Init() {
 	if err != nil {
 		logger.WithError(err).Fatal("init database failed")
 	}
-	dets.SetDB(DB)
+	dets.SetDB(DB, logger)
 	go gc()
 }
 

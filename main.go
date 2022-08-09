@@ -36,6 +36,7 @@ func init() {
 func main() {
 	// 初始化
 	db.Init()
+	defer db.Stop()
 	initBilibili()
 	bot.Init()
 	bot.StartService()
@@ -49,7 +50,6 @@ func main() {
 	if err := bot.Login(); err != nil {
 		logrus.Errorf("%+v", err)
 		bot.Stop()
-		db.Stop()
 		return
 	}
 
@@ -61,7 +61,6 @@ func main() {
 	<-ch
 	bot.SaveToken()
 	bot.Stop()
-	db.Stop()
 }
 
 func writeConfig() {
