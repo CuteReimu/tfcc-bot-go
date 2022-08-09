@@ -44,6 +44,10 @@ github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e h1:z3v4EQQKVt9U
 github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e/go.mod h1:PiX6uE+hsRxe3AeWL2RaGgQrIaIHqrmS1HvgB1QoZbM=
 github.com/CuteReimu/dets v0.0.0-20220809164358-7c1b0dd02e2b h1:DrMMq+FLwHloxvVG4S6FQVB9KikLPA683EWodPpQvZk=
 github.com/CuteReimu/dets v0.0.0-20220809164358-7c1b0dd02e2b/go.mod h1:xc4kXabZ5BMMcP++QWycgNRHO27ChnKUjg/XPHBCkM8=
+github.com/CuteReimu/dets v0.0.0-20220809193338-d70e445beae7 h1:Wz3YPj/iM+S7MOnd3HEHYqRR2vLcax4LFc1NbPp6Xow=
+github.com/CuteReimu/dets v0.0.0-20220809193338-d70e445beae7/go.mod h1:xc4kXabZ5BMMcP++QWycgNRHO27ChnKUjg/XPHBCkM8=
+github.com/CuteReimu/dets v0.0.0-20220809194204-c2afa39ebf3a h1:tPx30VtXsSS+jZK/U4HaIUwR/cex7NjFJ69/qDVMPIA=
+github.com/CuteReimu/dets v0.0.0-20220809194204-c2afa39ebf3a/go.mod h1:xc4kXabZ5BMMcP++QWycgNRHO27ChnKUjg/XPHBCkM8=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8 h1:0LF49i0DoeUMhyeWQalAulNcKYI3agegsgi4W/tjyyo=
 github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8/go.mod h1:K/NM/Y7NIt5JOTXLcVpoHbN7YcFarrEslLCWY/gUQ7A=
 github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de h1:cCEsQlZsem2DJlvtWI+CNI+lyz9zRuioBQFuBO94/MU=
@@ -372,6 +376,8 @@ golang.org/x/net v0.0.0-20210226172049-e18ecbb05110/go.mod h1:m0MpNAwzfU5UDzcl9v
 golang.org/x/net v0.0.0-20211029224645-99673261e6eb/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20220809012201-f428fae20770 h1:dIi4qVdvjZEjiMDv7vhokAZNGnz3kepwuXqFKYDdDMs=
 golang.org/x/net v0.0.0-20220809012201-f428fae20770/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
+golang.org/x/net v0.0.0-20220809184613-07c6da5e1ced h1:3dYNDff0VT5xj+mbj2XucFst9WKk6PdGOrb9n+SbIvw=
+golang.org/x/net v0.0.0-20220809184613-07c6da5e1ced/go.mod h1:YDH+HFinaLZZlnHAfSS6ZXJJ9M9t4Dl22yv3iI2vPwk=
 golang.org/x/oauth2 v0.0.0-20180821212333-d2e6202438be/go.mod h1:N/0e6XlmueqKjAGxoOufVs8QHGRruUQn6yWY3a++T0U=
 golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
 golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45/go.mod h1:gOpvHmFTYa4IltrdGE7lF6nIHvwfUNPOp7c8zoXwtLw=
