@@ -7,10 +7,12 @@ require (
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8
 	github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de
 	github.com/dgraph-io/badger/v3 v3.2103.2
+	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ozgio/strutil v0.4.0
 	github.com/pkg/errors v0.9.1
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/viper v1.12.0
+	github.com/tidwall/gjson v1.14.2
 )
 
 require (
@@ -23,7 +25,6 @@ require (
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/fumiama/imgsz v0.0.2 // indirect
-	github.com/go-resty/resty/v2 v2.7.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/glog v1.0.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -50,7 +51,6 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.0 // indirect
-	github.com/tidwall/gjson v1.14.2 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d // indirect

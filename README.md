@@ -58,6 +58,11 @@ qq:
   super_admin_qq: 12345678  # 主管理员QQ号
   qq_group: # 主要功能的QQ群
     - 12345678
+schedule:
+  qq_group: # 推送功能的QQ群
+    - 12345678
+  speedrun_push_delay: 600    # speedrun推送间隔
+  speedrun_api_key: asdfghjkl # speedrun的API Key
 ```
 
 修改配置文件后重新启动即可。
