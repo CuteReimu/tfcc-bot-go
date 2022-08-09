@@ -1,12 +1,11 @@
 package hkPusher
 
 import (
-	"encoding/json"
+	"github.com/CuteReimu/dets"
 	"github.com/Logiase/MiraiGo-Template/bot"
 	"github.com/Logiase/MiraiGo-Template/config"
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/translate"
 	"github.com/go-resty/resty/v2"
 	"github.com/tidwall/gjson"
@@ -77,59 +76,38 @@ func (m *mh) Serve(b *bot.Bot) {
 				continue
 			}
 			result := gjson.ParseBytes(buf)
-			value := db.Get([]byte("pushed_messages"))
-			if value == nil {
-				value = []byte("{}")
-			}
-			var pushedMessages map[string]int
-			err = json.Unmarshal(value, &pushedMessages)
-			if err != nil {
-				logger.WithError(err).Error("json unmarshal failed")
-				continue
-			}
+			pushedMessages := dets.GetStringMap([]byte("pushed_messages"))
 			var arr []string
 			for _, r := range result.Get("data").Array() {
 				id := r.Get("id").String()
 				if _, ok := pushedMessages[id]; !ok {
-					pushedMessages[id] = 1
+					pushedMessages[id] = "1"
 					s := re.ReplaceAllString(r.Get("text").String(), "")
 					if strings.Contains(s, "beat the WR") || strings.Contains(s, "got a new top 3 PB") {
 						arr = append(arr, translate.Translate(s))
 					}
 				}
 			}
-			value, err = json.Marshal(&pushedMessages)
-			if err != nil {
-				logger.WithError(err).Error("json unmarshal failed")
-				continue
-			}
-			db.Set([]byte("pushed_messages"), value)
-			if len(arr) < 0 {
-				continue
-			}
+			dets.Put([]byte("pushed_messages"), pushedMessages)
 			for _, qqGroup := range qqGroups {
 				groupCode := int64(qqGroup)
 				key := []byte("unsend:" + strconv.Itoa(qqGroup))
-				value = db.Get(key)
-				var oldArr []string
-				if len(value) > 0 {
-					oldArr = append(oldArr, string(value))
-				}
-				str := strings.Join(append(oldArr, arr...), "\r\n")
-				if len(str) == 0 {
+				oldArr := dets.GetStringSlice(key)
+				newArr := append(oldArr, arr...)
+				if len(newArr) == 0 {
 					continue
 				}
-				groupMsg := message.NewSendingMessage().Append(message.NewText(str))
+				groupMsg := message.NewSendingMessage().Append(message.NewText(strings.Join(newArr, "\r\n")))
 				retGroupMsg := b.SendGroupMessage(groupCode, groupMsg)
 				if retGroupMsg == nil {
 					logger.Info("群聊消息发送失败了")
 				} else if retGroupMsg.Id == -1 {
 					logger.Info("群聊消息被风控了")
 				} else {
-					db.Del(key)
+					dets.Del(key)
 					continue
 				}
-				db.Set(key, []byte(str))
+				dets.Put(key, newArr)
 			}
 		}
 	}()
