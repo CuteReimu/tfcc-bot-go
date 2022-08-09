@@ -141,7 +141,7 @@ func tips(c *client.QQClient, msg *message.GroupMessage) {
 }
 
 func isConfigQQGroup(groupCode int64) bool {
-	for _, qqGroup := range config.GlobalConfig.GetIntSlice("schedule.qq_group") {
+	for _, qqGroup := range config.GlobalConfig.GetIntSlice("qq.qq_group") {
 		if int64(qqGroup) == groupCode {
 			return true
 		}
