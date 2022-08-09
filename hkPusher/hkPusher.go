@@ -7,6 +7,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
+	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/translate"
 	"github.com/go-resty/resty/v2"
 	"github.com/tidwall/gjson"
 	"regexp"
@@ -93,7 +94,7 @@ func (m *mh) Serve(b *bot.Bot) {
 					pushedMessages[id] = 1
 					s := re.ReplaceAllString(r.Get("text").String(), "")
 					if strings.Contains(s, "beat the WR") || strings.Contains(s, "got a new top 3 PB") {
-						arr = append(arr, s)
+						arr = append(arr, translate.Translate(s))
 					}
 				}
 			}
@@ -110,7 +111,14 @@ func (m *mh) Serve(b *bot.Bot) {
 				groupCode := int64(qqGroup)
 				key := []byte("unsend:" + strconv.Itoa(qqGroup))
 				value = db.Get(key)
-				str := strings.Join(append([]string{string(value)}, arr...), "\r\n")
+				var oldArr []string
+				if len(value) > 0 {
+					oldArr = append(oldArr, string(value))
+				}
+				str := strings.Join(append(oldArr, arr...), "\r\n")
+				if len(str) == 0 {
+					continue
+				}
 				groupMsg := message.NewSendingMessage().Append(message.NewText(str))
 				retGroupMsg := b.SendGroupMessage(groupCode, groupMsg)
 				if retGroupMsg == nil {
@@ -118,6 +126,7 @@ func (m *mh) Serve(b *bot.Bot) {
 				} else if retGroupMsg.Id == -1 {
 					logger.Info("群聊消息被风控了")
 				} else {
+					db.Del(key)
 					continue
 				}
 				db.Set(key, []byte(str))
