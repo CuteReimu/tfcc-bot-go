@@ -50,8 +50,9 @@ func Translate(s string) string {
 }
 
 type trieNode struct {
-	child map[rune]*trieNode
-	value string
+	child  map[rune]*trieNode
+	value  string
+	exists bool
 }
 
 type Trie struct {
@@ -74,9 +75,10 @@ func (t *Trie) PutIfAbsent(key, value string) bool {
 			node = newNode
 		}
 	}
-	if len(node.value) > 0 {
+	if node.exists {
 		return false
 	}
+	node.exists = true
 	node.value = value
 	return true
 }
@@ -91,7 +93,7 @@ func (t *Trie) getLongest(s string) (string, string) {
 			if n, ok := node.child[c]; ok {
 				key += string(c)
 				node = n
-				if len(node.value) > 0 && (idx+1 >= len(s) || symbols[r[idx+1]]) {
+				if node.exists && (idx+1 >= len(s) || symbols[r[idx+1]]) {
 					node2 = node
 					key2 = key
 				}
@@ -133,7 +135,6 @@ var symbols = map[rune]bool{
 	')':  true,
 	'[':  true,
 	']':  true,
-	'-':  true,
 	'{':  true,
 	'}':  true,
 	'%':  true,
