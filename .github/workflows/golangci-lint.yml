@@ -19,10 +19,10 @@ jobs:
           go-version: 1.18
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+        uses: golangci/golangci-lint-action@v3
         with:
-          args: --timeout 3m0s
-          skip-go-installation: true
+          version: latest
+          args: --out-${NO_FUTURE}format line-number --timeout 3m0s
 
       - name: Build
         run: go build -v ./...
