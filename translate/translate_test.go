@@ -10,6 +10,22 @@ func TestWR(t *testing.T) {
 	}
 }
 
+func TestWR2(t *testing.T) {
+	s := `CCCC beat the WR in Hollow Knight Category Extensions - King's Pass: Level - Slower. The new WR is 0m 55s 900ms.`
+	s2 := Translate(s)
+	if s2 != `CCCC 打破了世界纪录：国王山道- Slower.新的世界纪录是0m 55s 900ms.` {
+		t.Error(s2)
+	}
+}
+
+func TestWR3(t *testing.T) {
+	s := `AAAA beat the WR in Hollow Knight Category Extensions - Save Myla - 1.4.3.2+ NMG. The new WR is 34m 57s.`
+	s2 := Translate(s)
+	if s2 != `AAAA 打破了世界纪录：拯救米拉-1.4.3.2+无主要邪道.新的世界纪录是34m 57s.` {
+		t.Error(s2)
+	}
+}
+
 func TestTop3(t *testing.T) {
 	s := `BBBB got a new top 3 PB in Hollow Knight Category Extensions - 0 Geo - All Glitches. Their time is 15m 31s.`
 	s2 := Translate(s)
