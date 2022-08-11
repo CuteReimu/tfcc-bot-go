@@ -120,10 +120,8 @@ func (e *getThwikiEvent) Execute(msg *message.GroupMessage, _ string) (groupMsg 
 }
 
 func (e *getThwikiEvent) getEvents(now time.Time) {
-	resp, err := resty.New().SetTimeout(20 * time.Second).R().SetQueryParams(map[string]string{
-		"start": now.Add(-3 * 24 * time.Hour).Format("2006-01-02"),
-		"end":   now.Add(4 * 24 * time.Hour).Format("2006-01-02"),
-	}).Get("https://calendar.thwiki.cc/events/")
+	resp, err := resty.New().SetTimeout(20 * time.Second).R().Get("https://calendar.thwiki.cc/api/events/" +
+		now.Add(-3*24*time.Hour).Format("2006-01-02") + "/" + now.Add(4*24*time.Hour).Format("2006-01-02"))
 	if err != nil {
 		logger.WithError(err).Error("failed to access thwiki")
 		return
