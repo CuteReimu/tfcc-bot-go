@@ -38,6 +38,32 @@ func init() {
 			break
 		}
 	}
+	m := map[string]string{
+		"beat the WR":                            "打破了世界纪录：",
+		"in Hollow Knight Category Extensions -": "",
+		"King's Pass: Level":                     "国王山道",
+		"in Hollow Knight -":                     "",
+		"The new WR is":                          "新的世界纪录是",
+		"Their time is":                          "时间是",
+		"Its time is":                            "时间是",
+		"The time is":                            "时间是",
+		"His time is":                            "时间是",
+		"Her time is":                            "时间是",
+		"got a new top 3 PB":                     "获得了前三：",
+		"Pantheon of the Master: Level":          "大师万神殿",
+		"Pantheon of the Artist: Level":          "艺术家万神殿",
+		"Pantheon of the Sage: Level":            "贤者万神殿",
+		"Pantheon of the Knight: Level":          "骑士万神殿",
+		"Pantheon of Hallownest: Level":          "圣巢万神殿",
+		"NMG.":                                   "无主要邪道.",
+		"- NMG":                                  "- 无主要邪道",
+		"- NMG.":                                 "- 无主要邪道.",
+	}
+	for key, val := range m {
+		if !translateDict.PutIfAbsent(key, val) {
+			panic(fmt.Sprint("出现重复数据：", key))
+		}
+	}
 }
 
 func Translate(s string) string {
@@ -140,4 +166,5 @@ var symbols = map[rune]bool{
 	'%':  true,
 	'\'': true,
 	'"':  true,
+	'.':  true,
 }
