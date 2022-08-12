@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/CuteReimu/bilibili v0.0.0-20220806095911-2d0e7e208d7e
 	github.com/CuteReimu/dets v0.0.0-20220809194204-c2afa39ebf3a
-	github.com/CuteReimu/threp v1.0.0
+	github.com/CuteReimu/threp v1.0.1
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8
 	github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
@@ -20,13 +20,11 @@ require (
 )
 
 require (
-	github.com/AndreasBriese/bbloom v0.0.0-20190825152654-46b345b51c96 // indirect
 	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f // indirect
 	github.com/RomiChan/protobuf v0.1.1-0.20220624030127-3310cba9dbc0 // indirect
 	github.com/RomiChan/syncx v0.0.0-20220404072119-d7ea0ae15a4c // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
-	github.com/dgraph-io/badger v1.6.2 // indirect
 	github.com/dgraph-io/ristretto v0.1.0 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
