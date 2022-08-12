@@ -26,6 +26,14 @@ func TestWR3(t *testing.T) {
 	}
 }
 
+func TestWR4(t *testing.T) {
+	s := `VVVV beat the WR in Hollow Knight - 112% APB - No Major Glitches. The new WR is 3h 09m 43s.`
+	s2 := Translate(s)
+	if s2 != `VVVV 打破了世界纪录：112% 全万神殿BOSS -无主要邪道.新的世界纪录是3h 09m 43s.` {
+		t.Error(s2)
+	}
+}
+
 func TestTop3(t *testing.T) {
 	s := `BBBB got a new top 3 PB in Hollow Knight Category Extensions - 0 Geo - All Glitches. Their time is 15m 31s.`
 	s2 := Translate(s)
