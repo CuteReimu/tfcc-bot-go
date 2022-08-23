@@ -14,7 +14,7 @@ import (
 var transLateData []byte
 
 var translateDict = &Trie{}
-var regexpSpace = regexp.MustCompile(`(?<![()\[\]{}%'"A-Za-z]) (?![()\[\]{}%'"A-Za-z])`, regexp.None)
+var regexpSpace = regexp.MustCompile(`(?<![()\[\]{}%'"A-Za-z-]) (?![()\[\]{}%'"A-Za-z-])`, regexp.None)
 
 func init() {
 	reader := bufio.NewReader(bytes.NewReader(transLateData))
