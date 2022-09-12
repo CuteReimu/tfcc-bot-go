@@ -58,37 +58,40 @@ func (m *mh) Serve(b *bot.Bot) {
 		defer ticker.Stop()
 		for {
 			<-ticker.C
-			resp, err := resty.New().SetTimeout(time.Second * 20).R().SetHeaders(map[string]string{
-				"Accept":    "application/json",
-				"X-API-Key": apiKey,
-			}).Get("https://www.speedrun.com/api/v1/notifications")
-			if err != nil {
-				logger.WithError(err).Error("cannot access speedrun.com")
-				continue
-			}
-			if resp.StatusCode() != 200 {
-				logger.Error("speedrun.com return code: ", resp.StatusCode())
-				continue
-			}
-			buf := resp.Body()
-			if !gjson.ValidBytes(buf) {
-				logger.Error("speedrun.com return invalid json: ", string(buf))
-				continue
-			}
-			result := gjson.ParseBytes(buf)
-			pushedMessages := dets.GetStringMap([]byte("pushed_messages"))
-			var arr []string
-			for _, r := range result.Get("data").Array() {
-				id := r.Get("id").String()
-				if _, ok := pushedMessages[id]; !ok {
-					pushedMessages[id] = "1"
-					s := re.ReplaceAllString(r.Get("text").String(), "")
-					if strings.Contains(s, "beat the WR") || strings.Contains(s, "got a new top 3 PB") {
-						arr = append(arr, translate.Translate(s))
+			arr := func() []string {
+				resp, err := resty.New().SetTimeout(time.Second * 20).R().SetHeaders(map[string]string{
+					"Accept":    "application/json",
+					"X-API-Key": apiKey,
+				}).Get("https://www.speedrun.com/api/v1/notifications")
+				if err != nil {
+					logger.WithError(err).Error("cannot access speedrun.com")
+					return nil
+				}
+				if resp.StatusCode() != 200 {
+					logger.Error("speedrun.com return code: ", resp.StatusCode())
+					return nil
+				}
+				buf := resp.Body()
+				if !gjson.ValidBytes(buf) {
+					logger.Error("speedrun.com return invalid json: ", string(buf))
+					return nil
+				}
+				result := gjson.ParseBytes(buf)
+				pushedMessages := dets.GetStringMap([]byte("pushed_messages"))
+				var arr []string
+				for _, r := range result.Get("data").Array() {
+					id := r.Get("id").String()
+					if _, ok := pushedMessages[id]; !ok {
+						pushedMessages[id] = "1"
+						s := re.ReplaceAllString(r.Get("text").String(), "")
+						if strings.Contains(s, "beat the WR") || strings.Contains(s, "got a new top 3 PB") {
+							arr = append(arr, translate.Translate(s))
+						}
 					}
 				}
-			}
-			dets.Put([]byte("pushed_messages"), pushedMessages)
+				dets.Put([]byte("pushed_messages"), pushedMessages)
+				return arr
+			}()
 			for _, qqGroup := range qqGroups {
 				groupCode := int64(qqGroup)
 				key := []byte("unsend:" + strconv.Itoa(qqGroup))
