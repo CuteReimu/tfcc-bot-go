@@ -55,9 +55,16 @@ func init() {
 		"Pantheon of the Sage: Level":            "贤者万神殿",
 		"Pantheon of the Knight: Level":          "骑士万神殿",
 		"Pantheon of Hallownest: Level":          "圣巢万神殿",
+		"White Palace: Level":                    "白色宫殿",
+		"Path of Pain: Level":                    "苦痛之路",
+		"Trial of the Warrior: Level":            "勇士的试炼",
+		"Trial of the Conqueror: Level":          "征服者的试炼",
+		"Trial of the Fool: Level":               "愚人的试炼",
 		"NMG.":                                   "无主要邪道.",
 		"- NMG":                                  "- 无主要邪道",
 		"- NMG.":                                 "- 无主要邪道.",
+		"Console Runs":                           "主机速通",
+		"Any Bindings":                           "任意锁",
 	}
 	for key, val := range m {
 		if !translateDict.PutIfAbsent(key, val) {
@@ -167,4 +174,5 @@ var symbols = map[rune]bool{
 	'\'': true,
 	'"':  true,
 	'.':  true,
+	',':  true,
 }
