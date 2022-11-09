@@ -9,7 +9,7 @@ require (
 	github.com/Logiase/MiraiGo-Template v0.0.0-20220412065005-27063e73adf8
 	github.com/Mrs4s/MiraiGo v0.0.0-20220720124026-5c0e2c5773de
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
-	github.com/dgraph-io/badger/v3 v3.2103.3
+	github.com/dgraph-io/badger/v3 v3.2103.4
 	github.com/dlclark/regexp2 v1.7.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/ozgio/strutil v0.4.0
