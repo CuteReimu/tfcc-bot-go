@@ -3,7 +3,7 @@
 # 东方Project沙包聚集地机器人
 
 ![](https://img.shields.io/github/languages/top/Touhou-Freshman-Camp/tfcc-bot-go "语言")
-[![](https://img.shields.io/github/workflow/status/Touhou-Freshman-Camp/tfcc-bot-go/Go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
+[![](https://img.shields.io/github/actions/workflow/status/Touhou-Freshman-Camp/tfcc-bot-go/golangci-lint.yml?branch=master)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
 [![](https://img.shields.io/github/contributors/Touhou-Freshman-Camp/tfcc-bot-go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/graphs/contributors "贡献者")
 [![](https://img.shields.io/github/license/Touhou-Freshman-Camp/tfcc-bot-go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
