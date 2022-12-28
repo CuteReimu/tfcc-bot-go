@@ -2,10 +2,10 @@
 
 # 东方Project沙包聚集地机器人
 
-![](https://img.shields.io/github/languages/top/Touhou-Freshman-Camp/tfcc-bot-go "语言")
-[![](https://img.shields.io/github/actions/workflow/status/Touhou-Freshman-Camp/tfcc-bot-go/golangci-lint.yml?branch=simplified-version)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
-[![](https://img.shields.io/github/contributors/Touhou-Freshman-Camp/tfcc-bot-go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/graphs/contributors "贡献者")
-[![](https://img.shields.io/github/license/Touhou-Freshman-Camp/tfcc-bot-go)](https://github.com/Touhou-Freshman-Camp/tfcc-bot-go/blob/master/LICENSE "许可协议")
+![](https://img.shields.io/github/languages/top/CuteReimu/tfcc-bot-go "语言")
+[![](https://img.shields.io/github/actions/workflow/status/CuteReimu/tfcc-bot-go/golangci-lint.yml?branch=simplified-version)](https://github.com/CuteReimu/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
+[![](https://img.shields.io/github/contributors/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/graphs/contributors "贡献者")
+[![](https://img.shields.io/github/license/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
 
 这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)编写。
@@ -58,6 +58,11 @@ qq:
   super_admin_qq: 12345678  # 主管理员QQ号
   qq_group: # 主要功能的QQ群
     - 12345678
+schedule:
+  qq_group: # 推送功能的QQ群
+    - 12345678
+  speedrun_push_delay: 600    # speedrun推送间隔
+  speedrun_api_key: asdfghjkl # speedrun的API Key
 ```
 
 修改配置文件后重新启动即可。

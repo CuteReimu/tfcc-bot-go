@@ -9,6 +9,7 @@ import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
 	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
+	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/hkPusher"
 	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -75,6 +76,9 @@ func writeConfig() {
 	config.GlobalConfig.Set("bilibili.mid", "12345678")
 	config.GlobalConfig.Set("bilibili.room_id", "12345678")
 	config.GlobalConfig.Set("bilibili.area_v2", "236")
+	config.GlobalConfig.Set("schedule.qq_group", []int64{12345678})
+	config.GlobalConfig.Set("schedule.speedrun_push_delay", "600")
+	config.GlobalConfig.Set("schedule.speedrun_api_key", "asdfghjkl")
 	err := config.GlobalConfig.WriteConfigAs("application.yaml")
 	if err != nil {
 		fmt.Println("生成application.yaml失败，请检查")

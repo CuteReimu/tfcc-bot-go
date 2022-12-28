@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ master, simplified-version ]
+    branches: [ master, hollow-knight-bot ]
   pull_request:
-    branches: [ master, simplified-version ]
+    branches: [ master, hollow-knight-bot ]
 
 jobs:
 
@@ -26,3 +26,6 @@ jobs:
 
       - name: Build
         run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
