@@ -3,7 +3,7 @@ package tfcc
 import (
 	"github.com/Logiase/MiraiGo-Template/utils"
 	"gopkg.in/yaml.v3"
-	"io/ioutil"
+	"os"
 )
 
 type JfNNData struct {
@@ -20,7 +20,7 @@ var jfNN map[string][]*JfNNData
 
 func init() {
 	m := make(map[string][]*JfNNData)
-	buf, err := ioutil.ReadFile("assets/score.yaml")
+	buf, err := os.ReadFile("assets/score.yaml")
 	if err != nil {
 		logger.WithError(err).Errorln("load score.yaml failed")
 		return
