@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ master, hollow-knight-bot ]
+    branches: [ master, hollow-knight-bot, hollow-knight-bot-full ]
   pull_request:
-    branches: [ master, hollow-knight-bot ]
+    branches: [ master, hollow-knight-bot, hollow-knight-bot-full ]
 
 jobs:
 
