@@ -11,6 +11,7 @@ import (
 	"github.com/ozgio/strutil"
 	"github.com/pkg/errors"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -24,14 +25,14 @@ type bilibiliVideoAnalysis struct {
 
 func newBilibiliVideoAnalysis() *bilibiliVideoAnalysis {
 	return &bilibiliVideoAnalysis{
-		avReg:    regexp.MustCompile(`(?<![A-Za-z0-9])(?:https?://www\.bilibili\.com/video/)?av(\d+)`, regexp.IgnoreCase),
-		bvReg:    regexp.MustCompile(`(?<![A-Za-z0-9])(?:https?://www\.bilibili\.com/video/|https?://b23\.tv)?bv([0-9A-Za-z]{10})`, regexp.IgnoreCase),
-		shortReg: regexp.MustCompile(`(?<![A-Za-z0-9])https?://b23\.tv/[0-9A-Za-z]{7}`, regexp.IgnoreCase),
+		avReg:    regexp.MustCompile(`^(?<![A-Za-z0-9])(?:https?://www\.bilibili\.com/video/)?av(\d+)$`, regexp.IgnoreCase),
+		bvReg:    regexp.MustCompile(`^(?<![A-Za-z0-9])(?:https?://www\.bilibili\.com/video/|https?://b23\.tv)?bv([0-9A-Za-z]{10})$`, regexp.IgnoreCase),
+		shortReg: regexp.MustCompile(`^(?<![A-Za-z0-9])https?://b23\.tv/[0-9A-Za-z]{7}$`, regexp.IgnoreCase),
 	}
 }
 
 func (b *bilibiliVideoAnalysis) Execute(c *client.QQClient, msg *message.GroupMessage, content string) (groupMsg *message.SendingMessage) {
-	result, found, err := b.getVideoInfo(content)
+	result, found, err := b.getVideoInfo(strings.TrimSpace(content))
 	if found {
 		if err != nil {
 			logger.WithError(err).Errorln("获取视频信息失败")
