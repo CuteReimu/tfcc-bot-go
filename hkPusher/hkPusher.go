@@ -45,7 +45,7 @@ func (m *mh) Serve(b *bot.Bot) {
 	if delay <= 0 {
 		return
 	}
-	qqGroups := config.GlobalConfig.GetIntSlice("schedule.qq_group")
+	qqGroups := config.GlobalConfig.GetIntSlice("schedule.speedrun_push_qq_group")
 	if len(qqGroups) == 0 {
 		return
 	}

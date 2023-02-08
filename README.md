@@ -73,6 +73,10 @@ schedule:
   qq_group: # 预约功能提醒QQ群
   - 12345678
   video_push_delay: 600  # 视频推送间隔
+  speedrun_push_delay: 300    # speedrun推送间隔
+  speedrun_push_qq_group: # speedrun推送QQ群
+    - 12345678
+  speedrun_api_key: abcdefjhijk # speedrun的API Key
 thwiki:
   enable: false  # 是否开启查新闻功能
 ```
