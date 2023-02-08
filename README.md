@@ -3,7 +3,7 @@
 # 东方Project沙包聚集地机器人
 
 ![](https://img.shields.io/github/languages/top/CuteReimu/tfcc-bot-go "语言")
-[![](https://img.shields.io/github/actions/workflow/status/CuteReimu/tfcc-bot-go/golangci-lint.yml?branch=master)](https://github.com/CuteReimu/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
+[![](https://img.shields.io/github/actions/workflow/status/CuteReimu/tfcc-bot-go/golangci-lint.yml?branch=hollow-knight-bot-full)](https://github.com/CuteReimu/tfcc-bot-go/actions/workflows/golangci-lint.yml "代码分析")
 [![](https://img.shields.io/github/contributors/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/graphs/contributors "贡献者")
 [![](https://img.shields.io/github/license/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
