@@ -1,13 +1,13 @@
 module github.com/Touhou-Freshman-Camp/tfcc-bot-go
 
-go 1.19
+go 1.20
 
 require (
-	github.com/CuteReimu/bilibili v0.0.0-20221220161403-4d9fed6890ed
+	github.com/CuteReimu/bilibili v0.0.0-20230209084039-fea1685af84f
 	github.com/CuteReimu/dets v0.0.0-20221221024921-24dd3e261f3c
 	github.com/CuteReimu/threp v1.0.1
 	github.com/Logiase/MiraiGo-Template v0.0.0-20221120093149-c0c90b30689e
-	github.com/Mrs4s/MiraiGo v0.0.0-20221227055049-f19951661121
+	github.com/Mrs4s/MiraiGo v0.0.0-20230208132316-727686e453de
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/dlclark/regexp2 v1.8.0
@@ -21,12 +21,12 @@ require (
 
 require (
 	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f // indirect
-	github.com/RomiChan/protobuf v0.1.1-0.20220624030127-3310cba9dbc0 // indirect
+	github.com/RomiChan/protobuf v0.1.1-0.20230204044148-2ed269a2e54d // indirect
 	github.com/RomiChan/syncx v0.0.0-20221202055724-5f842c53020e // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/dgraph-io/ristretto v0.1.1 // indirect
-	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/fumiama/imgsz v0.0.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
@@ -34,16 +34,16 @@ require (
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/google/flatbuffers v22.11.23+incompatible // indirect
+	github.com/google/flatbuffers v23.1.21+incompatible // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/klauspost/compress v1.15.13 // indirect
+	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible // indirect
 	github.com/lestrrat-go/strftime v1.0.6 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/maruel/rs v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
-	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
@@ -59,10 +59,10 @@ require (
 	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/net v0.6.0 // indirect
 	golang.org/x/sync v0.1.0 // indirect
-	golang.org/x/sys v0.3.0 // indirect
-	golang.org/x/text v0.5.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	rsc.io/qr v0.2.0 // indirect
