@@ -173,7 +173,7 @@ func (r *randSpell) loadSpells(name string) error {
 	}
 	defer func(f fs.File) { _ = f.Close() }(f)
 	reader := bufio.NewReader(f)
-	arr := strings.Split(name[:len(name)-len(".txt")], " ")
+	arr := strings.Split(name[len("spells/"):len(name)-len(".txt")], " ")
 	for _, s := range arr {
 		r.gameMap[s] = &spells{}
 	}
