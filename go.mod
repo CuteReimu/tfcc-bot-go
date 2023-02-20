@@ -3,11 +3,11 @@ module github.com/Touhou-Freshman-Camp/tfcc-bot-go
 go 1.20
 
 require (
-	github.com/CuteReimu/bilibili v0.0.0-20230209084039-fea1685af84f
+	github.com/CuteReimu/bilibili v0.0.0-20230218182434-d70780cb2f09
 	github.com/CuteReimu/dets v0.0.0-20221221024921-24dd3e261f3c
 	github.com/CuteReimu/threp v1.0.1
 	github.com/Logiase/MiraiGo-Template v0.0.0-20221120093149-c0c90b30689e
-	github.com/Mrs4s/MiraiGo v0.0.0-20230208132316-727686e453de
+	github.com/Mrs4s/MiraiGo v0.0.0-20230219150615-e7a34fdd9062
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.5
 	github.com/dlclark/regexp2 v1.8.0
