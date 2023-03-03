@@ -1,12 +1,12 @@
 package repAnalyze
 
 import (
+	"github.com/CuteReimu/tfcc-bot-go/bot"
+	"github.com/CuteReimu/tfcc-bot-go/repeaterInterruption"
+	"github.com/CuteReimu/tfcc-bot-go/utils"
 	"github.com/CuteReimu/threp"
-	"github.com/Logiase/MiraiGo-Template/bot"
-	"github.com/Logiase/MiraiGo-Template/utils"
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"github.com/go-resty/resty/v2"
 	"strings"
 	"sync"

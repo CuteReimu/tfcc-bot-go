@@ -2,8 +2,8 @@ package commandHandler
 
 import (
 	"fmt"
+	"github.com/CuteReimu/tfcc-bot-go/tfcc"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/tfcc"
 	"strings"
 )
 

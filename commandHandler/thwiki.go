@@ -3,7 +3,7 @@ package commandHandler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/Logiase/MiraiGo-Template/config"
+	"github.com/CuteReimu/tfcc-bot-go/config"
 	"github.com/Mrs4s/MiraiGo/message"
 	"github.com/go-resty/resty/v2"
 	"sort"

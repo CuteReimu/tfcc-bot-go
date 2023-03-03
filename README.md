@@ -8,7 +8,7 @@
 [![](https://img.shields.io/github/license/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
 
-这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo-Template](https://github.com/Logiase/MiraiGo-Template)编写。
+这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo](https://github.com/Mrs4s/MiraiGo)编写。
 
 ## 声明
 
@@ -51,7 +51,7 @@ bilibili:
   room_id: "12345678"      # B站直播间房间号
   username: "13888888888"  # B站用户名
 bot:
-  loginmethod: qrcode  # 登录方式
+  login-method: qrcode  # 登录方式
   account: 0           # 机器人QQ号
   password: ""         # 机器人密码
 qq:
@@ -115,7 +115,6 @@ thwiki:
 ## 第三方库的使用
 
 - github.com/Mrs4s/MiraiGo 一个移植于mirai的golang实现的库
-- github.com/Logiase/MiraiGo-Template 基于MiraiGo的多模块设计组合
 - github.com/dgraph-io/badger 一个强大的内嵌的数据库系统
 - github.com/sirupsen/logrus 一个强大的日志库
 - github.com/go-resty/resty 强大的Http Client库

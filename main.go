@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"github.com/CuteReimu/bilibili"
 	"github.com/CuteReimu/dets"
-	"github.com/Logiase/MiraiGo-Template/bot"
-	"github.com/Logiase/MiraiGo-Template/config"
-	"github.com/Logiase/MiraiGo-Template/utils"
-	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/chatPipeline"
-	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/commandHandler"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
-	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repAnalyze"
-	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
-	_ "github.com/Touhou-Freshman-Camp/tfcc-bot-go/videoPusher"
+	"github.com/CuteReimu/tfcc-bot-go/bot"
+	_ "github.com/CuteReimu/tfcc-bot-go/chatPipeline"
+	_ "github.com/CuteReimu/tfcc-bot-go/commandHandler"
+	"github.com/CuteReimu/tfcc-bot-go/config"
+	"github.com/CuteReimu/tfcc-bot-go/db"
+	_ "github.com/CuteReimu/tfcc-bot-go/repAnalyze"
+	_ "github.com/CuteReimu/tfcc-bot-go/repeaterInterruption"
+	"github.com/CuteReimu/tfcc-bot-go/utils"
+	_ "github.com/CuteReimu/tfcc-bot-go/videoPusher"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"
@@ -28,10 +28,7 @@ func init() {
 		_, _ = os.Stdin.Read(b)
 		os.Exit(0)
 	}
-	_, err = os.Stat("device.json")
-	if err != nil {
-		bot.GenRandomDevice()
-	}
+	logrus.SetReportCaller(true)
 	utils.WriteLogToFS(utils.LogWithStack)
 	config.Init()
 }
@@ -47,7 +44,7 @@ func main() {
 	// 使用协议
 	// 不同协议可能会有部分功能无法使用
 	// 在登陆前切换协议
-	bot.UseProtocol(bot.IPad)
+	bot.UseProtocol(bot.AndroidWatch)
 
 	// 登录
 	if err := bot.Login(); err != nil {
@@ -68,7 +65,7 @@ func main() {
 
 func writeConfig() {
 	config.GlobalConfig = &config.Config{Viper: viper.New()}
-	config.GlobalConfig.Set("bot.loginmethod", "qrcode")
+	config.GlobalConfig.Set("bot.login-method", "qrcode")
 	config.GlobalConfig.Set("bot.account", int64(0))
 	config.GlobalConfig.Set("bot.password", "")
 	config.GlobalConfig.Set("qq.rand_count", int64(10))

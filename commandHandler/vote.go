@@ -3,9 +3,9 @@ package commandHandler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/CuteReimu/tfcc-bot-go/db"
+	"github.com/CuteReimu/tfcc-bot-go/perm"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"sort"
 	"strings"
 )

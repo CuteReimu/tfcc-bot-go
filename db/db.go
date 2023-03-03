@@ -2,7 +2,7 @@ package db
 
 import (
 	"github.com/CuteReimu/dets"
-	"github.com/Logiase/MiraiGo-Template/utils"
+	"github.com/CuteReimu/tfcc-bot-go/utils"
 	"github.com/dgraph-io/badger/v3"
 	"time"
 )

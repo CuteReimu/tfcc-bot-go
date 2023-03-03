@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"github.com/CuteReimu/bilibili"
 	"github.com/CuteReimu/dets"
-	"github.com/Logiase/MiraiGo-Template/config"
+	"github.com/CuteReimu/tfcc-bot-go/config"
+	"github.com/CuteReimu/tfcc-bot-go/db"
+	"github.com/CuteReimu/tfcc-bot-go/perm"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/db"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"github.com/ozgio/strutil"
 )
 

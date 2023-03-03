@@ -1,11 +1,11 @@
 package chatPipeline
 
 import (
-	"github.com/Logiase/MiraiGo-Template/bot"
-	"github.com/Logiase/MiraiGo-Template/utils"
+	"github.com/CuteReimu/tfcc-bot-go/bot"
+	"github.com/CuteReimu/tfcc-bot-go/repeaterInterruption"
+	"github.com/CuteReimu/tfcc-bot-go/utils"
 	"github.com/Mrs4s/MiraiGo/client"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/repeaterInterruption"
 	"strings"
 	"sync"
 )

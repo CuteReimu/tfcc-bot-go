@@ -1,8 +1,8 @@
 package commandHandler
 
 import (
+	"github.com/CuteReimu/tfcc-bot-go/perm"
 	"github.com/Mrs4s/MiraiGo/message"
-	"github.com/Touhou-Freshman-Camp/tfcc-bot-go/perm"
 	"strconv"
 	"strings"
 )

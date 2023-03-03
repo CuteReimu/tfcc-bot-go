@@ -1,7 +1,7 @@
 package tfcc
 
 import (
-	"github.com/Logiase/MiraiGo-Template/utils"
+	"github.com/CuteReimu/tfcc-bot-go/utils"
 	"gopkg.in/yaml.v3"
 	"os"
 )
