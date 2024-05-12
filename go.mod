@@ -10,7 +10,7 @@ require (
 	github.com/Mrs4s/MiraiGo v0.0.0-20230307172929-fee6c23736c1
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de
 	github.com/dgraph-io/badger/v3 v3.2103.5
-	github.com/dlclark/regexp2 v1.8.1
+	github.com/dlclark/regexp2 v1.11.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/lestrrat-go/file-rotatelogs v2.4.0+incompatible
 	github.com/ozgio/strutil v0.4.0
