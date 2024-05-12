@@ -8,7 +8,7 @@
 [![](https://img.shields.io/github/license/CuteReimu/tfcc-bot-go)](https://github.com/CuteReimu/tfcc-bot-go/blob/master/LICENSE "许可协议")
 </div>
 
-**本项目已停止维护，已迁移至Mirai版本：https://github.com/CuteReimu/tfcc-bot-mirai-console**
+**本项目已迁移至 https://github.com/CuteReimu/YinYangJade**
 
 这是东方Project沙包聚集地（以下简称“红群”）的机器人，基于[MiraiGo](https://github.com/Mrs4s/MiraiGo)编写。
 
